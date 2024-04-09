@@ -63,13 +63,13 @@ const SelectedQuestionTile = ({ tile, onClose }: Props) => {
       'transition-opacity duration-300', // Apply transition to opacity over 300ms
       isVisible ? 'opacity-100' : 'opacity-0', // Control visibility with state
     )}>
-      <h1 className='absolute top-4 left-4 text-2xl font-semibold text-white'>
+      <h1 className='absolute top-4 left-4 text-lg md:text-2xl font-semibold text-white'>
         {tile.category.title} | {tile.pointValue}
       </h1>
       <div className='w-full h-full rounded-lg p-4 flex flex-col justify-center items-center'>
-        <div className='flex flex-col justify-center items-center gap-16'>
-          <p className='text-5xl text-white underline'>{showAnswer ? 'Answer' : 'Question'}:</p>
-          <p className='text-5xl text-white'>{showAnswer ? tile.answer : tile.text}</p>
+        <div className='flex flex-col justify-center items-center gap-5 md:gap-16'>
+          <p className='text-xl md:text-5xl text-white underline'>{showAnswer ? 'Answer' : 'Question'}:</p>
+          <p className='text-xl md:text-5xl text-white'>{showAnswer ? tile.answer : tile.text}</p>
         </div>
         <button
           onClick={handleClose}
@@ -95,7 +95,7 @@ const SelectedQuestionTile = ({ tile, onClose }: Props) => {
       </div>
       <button
         onClick={() => setShowAnswer(!showAnswer)}
-        className='absolute bottom-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg'
+        className='absolute bottom-16 md:bottom-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg'
       >
         {showAnswer ? 'Show Question' : 'Show Answer'}
       </button>
