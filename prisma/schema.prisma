@@ -11,54 +11,46 @@ datasource db {
 }
 
 model Category {
-    id          Int    @id @default(autoincrement())
-    title       String
-    gameRoundId Int
+    id     String @id @default(cuid())
+    title  String
+    gameId String
 
     questions Question[]
-    gameRound GameRound  @relation(fields: [gameRoundId], references: [id])
+    gameRound Game       @relation(fields: [gameId], references: [id])
 }
 
 model Question {
-    id         Int    @id @default(autoincrement())
+    id         String @id @default(cuid())
     text       String
     answer     String
-    pointValue Int
-    categoryId Int
+    pointValue String
+    categoryId String
 
     category Category @relation(fields: [categoryId], references: [id])
 }
 
-model GameRound {
-    id     Int    @id @default(autoincrement())
-    name   String
-    gameId Int
-
-    categories Category[]
-    game       Game       @relation(fields: [gameId], references: [id])
-}
-
 model Game {
-    id   Int      @id @default(autoincrement())
+    id   String   @id @default(cuid())
+    name String
     date DateTime @default(now())
 
-    gameRounds GameRound[]
+    categories Category[]
     players    Player[]
 }
 
 model Player {
-    id     Int    @id @default(autoincrement())
+    id     String @id @default(cuid())
     name   String
-    gameId Int
+    gameId String
 
     game         Game          @relation(fields: [gameId], references: [id])
     playerScores PlayerScore[]
 }
 
 model PlayerScore {
-    id       Int @id @default(autoincrement())
-    score    Int @default(0)
-    playerId Int
+    id       String @id @default(cuid())
+    score    Int    @default(0)
+    playerId String
 
     player Player @relation(fields: [playerId], references: [id])
 }

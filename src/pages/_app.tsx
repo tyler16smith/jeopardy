@@ -12,7 +12,7 @@ const inter = Inter({
 });
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <main className={`font-sans ${inter.variable}`}>
+    <main className={`font-sans ${inter.variable} bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white`}>
       <Toaster position="top-right" reverseOrder={false} />
       <Component {...pageProps} />
     </main>
