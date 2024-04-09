@@ -1,17 +1,6 @@
 import supabase from "@/utils/supabase"
 
 export const getGame = async (gameId: string) => {
-  // debugger
-  const { data, error } = await supabase.from('Game').select('*')
-  if (data) {
-    console.log('Game data:', data)
-    // return
-  }
-  if (error) {
-    console.error('Error fetching game:', error)
-    return
-  }
-  
   // get categories
   const {
     data: categories,
@@ -20,10 +9,9 @@ export const getGame = async (gameId: string) => {
     .from('Category')
     .select('*')
     .eq('gameId', gameId)
-    // .order('id', { ascending: true })
 
   if (categoriesError) {
-    console.error('Error fetching categories:', error)
+    console.error('Error fetching categories:', categoriesError)
     return
   }
 
@@ -49,33 +37,34 @@ export const getGame = async (gameId: string) => {
   }
 
   // Group questions by pointValue
-  const groupedByPointValue = data.reduce((acc, question) => {
+  const groupedByPointValue = questions.reduce((acc, question) => {
     const { pointValue } = question
     if (!acc[pointValue]) {
-      acc[pointValue] = []
+      acc[pointValue] = {
+        pointValue,
+        questions: []
+      }
     }
-    acc[pointValue].push(question)
+    acc[pointValue].questions.push(question)
     return acc
   }, {})
 
-  // Convert the grouped object into an array of arrays sorted by pointValue
+  // Sort questions within each pointValue group by the category order
+  Object.values(groupedByPointValue).forEach(group => {
+    group.questions.sort((a, b) => {
+      const indexA = categories.findIndex(cat => cat.id === a.category.id)
+      const indexB = categories.findIndex(cat => cat.id === b.category.id)
+      return indexA - indexB
+    })
+  })
+
+  // Convert the grouped object into an array sorted by pointValue
   const sortedGroups = Object.keys(groupedByPointValue)
     .sort((a, b) => parseInt(a) - parseInt(b))
     .map(pointValue => groupedByPointValue[pointValue])
 
-  // group questions by category
-  const groupedByCategory = groupedByPointValue.reduce((acc, question) => {
-    const { category } = question
-    if (!acc[category.id]) {
-      acc[category.id] = {
-        id: category.id,
-        title: category.title,
-        questions: []
-      }
-    }
-    acc[category.id].questions.push(question)
-    return acc
-  }, {})
-
-  return sortedGroups
+  return {
+    categories,
+    questions: sortedGroups
+  }
 }
