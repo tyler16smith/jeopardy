@@ -68,7 +68,7 @@ const SelectedQuestionTile = ({ tile, onClose }: Props) => {
       </h1>
       <div className='w-full h-full rounded-lg p-4 flex flex-col justify-center items-center'>
         <div className='flex flex-col justify-center items-center gap-5 md:gap-16'>
-          <p className='text-xl md:text-5xl text-gray-300 px-3 py-1 rounded-xl bg-gray-300/10'>{showAnswer ? 'Answer' : 'Question'}:</p>
+          <p className='text-xl md:text-4xl text-gray-300 px-4 py-2 rounded-xl bg-gray-300/10 font-medium'>{showAnswer ? 'Answer' : 'Question'}:</p>
           <p className='text-xl md:text-5xl text-white'>{showAnswer ? tile.answer : tile.text}</p>
         </div>
         <button

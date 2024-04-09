@@ -22,19 +22,20 @@ const Game = () => {
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null)
 
   const LoadingCategories = () => (
-    <div className="grid grid-cols-5 gap-1 w-full">
+    <div className="grid grid-cols-5 gap-1 md:gap-3 w-full">
       {[...Array(5)].map((_, i) => (
         <div key={i} className="h-16 md:h-20 bg-gray-300/5 animate-pulse rounded-lg" />
       ))}
     </div>
   )
   const LoadingQuestions = () => (
-    <div className="grid grid-cols-5 gap-1 w-full mt-3">
+    <div className="grid grid-cols-5 gap-1 md:gap-3 w-full mt-3">
       {[...Array(25)].map((_, i) => (
         <div key={i} className="h-20 md:h-32 bg-gray-300/10 animate-pulse rounded-lg" />
       ))}
     </div>
   )
+  console.log("QUESTION: ", game?.questions)
 
   return (
     <div className='flex justify-center items-center w-screen h-screen relative transition-all duration-300 ease-in-out'>
@@ -60,7 +61,18 @@ const Game = () => {
               ))}
             </div>
             <div className="grid grid-cols-5 gap-1.5 md:gap-3 mt-1.5 md:mt-3">
-              {game?.questions.map((row, i) => (
+              {game?.questions.map(questionCategory => (
+                questionCategory.questions.map(question => (
+                  <div
+                    key={question.id}
+                    onClick={() => setSelectedQuestion(question)}
+                    className="flex justify-center items-center w-full h-20 md:h-32 bg-gray-300/30 hover:bg-gray-300/50 rounded-lg cursor-pointer"
+                  >
+                    <div className="text-xl md:text-3xl text-white text-center">{question.pointValue}</div>
+                  </div>
+                ))
+              ))}
+              {/* {game?.questions.map((row, i) => (
                 <div key={i}>
                   {row.questions?.map((question: Question) => (
                     <div
@@ -72,7 +84,7 @@ const Game = () => {
                     </div>
                   ))}
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         )}
