@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Question } from '@/pages/[gameId]'
+import { Question } from '@/pages/g/[gameId]/play'
 import classNames from 'classnames'
 import CustomDropdown from './CustomDropdown'
 

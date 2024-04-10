@@ -1,6 +1,16 @@
 import supabase from "@/utils/supabase"
 
 export const getGame = async (gameId: string) => {
+  // get game
+  const {
+    data: game,
+    error: gameError
+  } = await supabase
+    .from('Game')
+    .select('*')
+    .eq('id', gameId)
+    .single()
+  
   // get categories
   const {
     data: categories,
@@ -36,6 +46,15 @@ export const getGame = async (gameId: string) => {
     return
   }
 
+  // get players
+  const {
+    data: players,
+    error: playersError
+  } = await supabase
+    .from('Player')
+    .select('name')
+    .eq('gameId', gameId)
+
   // Group questions by pointValue
   const groupedByPointValue = questions.reduce((acc, question) => {
     const { pointValue } = question
@@ -64,7 +83,35 @@ export const getGame = async (gameId: string) => {
     .map(pointValue => groupedByPointValue[pointValue])
 
   return {
+    game,
+    players,
     categories,
     questions: sortedGroups
   }
+}
+
+export const saveGameDetails = async (gameId: string, name: string, players: string[]) => {
+  debugger;
+  const { error: gameError } = await supabase
+    .from('Game')
+    .upsert({
+      id: gameId,
+      name,
+    })
+  
+  const { error: playerError } = await supabase
+    .from('Player')
+    .upsert(
+      players.map(name => ({
+        gameId,
+        name
+      }))
+    )
+
+  if (gameError || playerError) {
+    console.error('Error saving game details:', gameError || playerError)
+    return false
+  }
+
+  return true
 }

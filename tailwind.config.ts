@@ -8,6 +8,11 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+      colors: {
+        jeopardy: 'hsl(280,100%,70%)',
+        'jeopardy-light': 'hsl(280,100%,80%)',
+        'jeopardy-dark': 'hsl(280,100%,60%)',
+      }
     },
   },
   plugins: [],

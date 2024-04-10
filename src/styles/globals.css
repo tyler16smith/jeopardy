@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom scrollbar */
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #2e305c;
+  border-radius: 10px;
+}
+
+/* For Firefox */
+.scrollbar {
+  scrollbar-width: normal;
+  scrollbar-color: #2e305c transparent;
+}
