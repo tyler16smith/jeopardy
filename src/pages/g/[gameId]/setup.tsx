@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import AddPlayers from '@/components/Setup/AddPlayers'
 import Input from '@/components/Input'
-import classNames from 'classnames'
-import { Rocket } from 'lucide-react'
-import { api } from '@/utils/api'
-import toast from 'react-hot-toast'
 
 const NewGame = () => {
-  const router = useRouter()
-  const gameId = router.query.gameId as string
   const [name, setName] = useState('')
 
   useEffect(() => {
@@ -22,7 +15,7 @@ const NewGame = () => {
         <p className='text-2xl font-bold text-center mb-5'>{name || 'New Game'}</p>
         <label htmlFor="name" className='text-md'>Game Name</label>
         <Input id='new-game-name-input' value={name} setValue={setName} placeholder="Ex: Smith Family Jeopardy" />
-        <AddPlayers />
+        <AddPlayers gameName={name} />
       </div>
     </div>
   )

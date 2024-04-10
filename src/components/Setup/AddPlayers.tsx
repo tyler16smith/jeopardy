@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import NewPlayer from './NewPlayer'
 import cuid from 'cuid'
 import Player from '../Player'
-import { Plus } from 'lucide-react'
+import { Plus, Rocket } from 'lucide-react'
 import toast from 'react-hot-toast'
 import classNames from 'classnames'
 import { getUniqueIconAndColor } from './utils'
@@ -15,8 +15,11 @@ export interface TPlayer {
   iconId: string
   colorId: string
 }
+type AddPlayersProps = {
+  gameName: string
+}
 
-const AddPlayers = (gameName: string) => {
+const AddPlayers = ({ gameName }: AddPlayersProps) => {
   const router = useRouter()
   const gameId = router.query.gameId as string
   const [players, setPlayers] = useState<TPlayer[]>([])
@@ -102,14 +105,14 @@ const AddPlayers = (gameName: string) => {
         Add Players
       </button>
       <button
-        disabled={!name}
+        disabled={!gameName}
         onClick={startGame}
         className={classNames(
           'flex justify-center items-center gap-2 mt-10',
           'p-2 rounded border-[1px] border-[#6233a6]/20 w-full',
           'transition duration-200 outline-none focus:ring-4 focus:ring-[#6233a6]/30', {
-          'bg-[#6233a6]/80 hover:bg-[#6233a6]/60 text-white': name,
-          'bg-[#6233a6]/40 text-gray-500 cursor-not-allowed': !name
+          'bg-[#6233a6]/80 hover:bg-[#6233a6]/60 text-white': gameName,
+          'bg-[#6233a6]/40 text-gray-500 cursor-not-allowed': !gameName
         }
         )}
       >
