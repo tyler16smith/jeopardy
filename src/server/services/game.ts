@@ -1,4 +1,5 @@
 import supabase from "@/utils/supabase"
+import { TPlayer } from "@/utils/types"
 
 export const getGame = async (gameId: string) => {
   // get game
@@ -52,7 +53,7 @@ export const getGame = async (gameId: string) => {
     error: playersError
   } = await supabase
     .from('Player')
-    .select('name')
+    .select('*')
     .eq('gameId', gameId)
 
   // Group questions by pointValue
@@ -90,8 +91,11 @@ export const getGame = async (gameId: string) => {
   }
 }
 
-export const saveGameDetails = async (gameId: string, name: string, players: string[]) => {
-  debugger;
+export const saveGameDetails = async (
+  gameId: string,
+  name: string,
+  players: TPlayer[]
+) => {
   const { error: gameError } = await supabase
     .from('Game')
     .upsert({
@@ -102,9 +106,9 @@ export const saveGameDetails = async (gameId: string, name: string, players: str
   const { error: playerError } = await supabase
     .from('Player')
     .upsert(
-      players.map(name => ({
-        gameId,
-        name
+      players.map(player => ({
+        ...player,
+        gameId
       }))
     )
 

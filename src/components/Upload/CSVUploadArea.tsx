@@ -10,9 +10,8 @@ const CSVUploadArea = ({ dragging, handleFileChange }: CSVUploadAreaProps) => {
   // Ref for the file input
   const fileInputRef = useRef(null);
 
-  // Function to trigger file input click
   const handleDivClick = () => {
-    fileInputRef.current.click();
+    fileInputRef?.current?.click();
   };
 
   return (

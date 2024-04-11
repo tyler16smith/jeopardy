@@ -24,7 +24,14 @@ export const gameRouter = createTRPCRouter({
     .input(z.object({
       gameId: z.string(),
       name: z.string(),
-      players: z.array(z.string()),
+      players: z.array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          iconId: z.number(),
+          colorId: z.number(),
+        })
+      ),
     }))
     .mutation(async ({ input }) => {
       return await saveGameDetails(input.gameId, input.name, input.players);

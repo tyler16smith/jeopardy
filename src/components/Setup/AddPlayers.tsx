@@ -1,81 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
-import NewPlayer from './NewPlayer'
-import cuid from 'cuid'
-import Player from '../Player'
 import { Plus, Rocket } from 'lucide-react'
-import toast from 'react-hot-toast'
 import classNames from 'classnames'
-import { getUniqueIconAndColor } from './utils'
-import { api } from '@/utils/api'
-import { useRouter } from 'next/router'
+import NewPlayer from './NewPlayer'
+import Player from '../Player'
+import { useSetupContext } from '@/context/SetupContext'
 
-export interface TPlayer {
-  id: string
-  name: string
-  iconId: string
-  colorId: string
-}
-type AddPlayersProps = {
-  gameName: string
-}
-
-const AddPlayers = ({ gameName }: AddPlayersProps) => {
-  const router = useRouter()
-  const gameId = router.query.gameId as string
-  const [players, setPlayers] = useState<TPlayer[]>([])
-  const [addPlayer, setAddPlayer] = useState<boolean>(false)
-  const [loadingStartGame, setLoadingStartGame] = useState(false)
-  const saveGameDetails = api.game.saveGameDetails.useMutation()
-  const lastPlayerRef = useRef<HTMLDivElement | null>(null)
-
-  useEffect(() => {
-    if (lastPlayerRef.current) {
-      // Scroll the last player into view
-      lastPlayerRef?.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-      });
+const AddPlayers = () => {
+  const {
+    setupManagement: {
+      gameName,
+      players,
+      addPlayer,
+      setAddPlayer,
+      loadingStartGame,
+      lastPlayerRef,
+      handleDeletePlayer,
+      handleAddPlayer,
+      startGame,
     }
-  }, [players]);
-
-  const startGame = async () => {
-    setLoadingStartGame(true)
-    debugger;
-    const success = await saveGameDetails.mutateAsync({
-      gameId,
-      name: gameName,
-      players: []
-    })
-    if (!success) {
-      toast.error('Failed to save game details. Please try again later.')
-      setLoadingStartGame(false)
-      return
-    }
-    router.push(`/g/${gameId}/play`)
-  }
-
-
-  const handleAddPlayer = (name: string) => {
-    if (!name) {
-      toast.error('Please enter a name')
-      return
-    }
-    const { iconId, colorId } = getUniqueIconAndColor(players)
-    const newPlayer = {
-      id: cuid(),
-      name,
-      iconId,
-      colorId,
-    }
-    setPlayers([
-      ...players,
-      newPlayer
-    ])
-  }
-
-  const handleDeletePlayer = (id: string) => {
-    setPlayers(players.filter(player => player.id !== id))
-  }
+  } = useSetupContext()
 
   return (
     <>
@@ -88,10 +30,7 @@ const AddPlayers = ({ gameName }: AddPlayersProps) => {
         ))}
       </div>
       {addPlayer && (
-        <NewPlayer
-          handleAddPlayer={handleAddPlayer}
-          hideAddPlayer={() => setAddPlayer(false)}
-        />
+        <NewPlayer />
       )}
       <button
         onClick={() => setAddPlayer(true)}

@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useGameContext } from '@/context/GameContext';
+import { TPlayer } from '@/utils/types';
+import { useState } from 'react';
 
-const CustomDropdown = ({ options, onSelect }) => {
+const CustomDropdown = () => {
+  const {
+    gameManagement: {
+      players,
+      selectedOption,
+      setSelectedOption,
+    }
+  } = useGameContext()
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
 
-  const handleSelect = (option) => {
+  const handleSelect = (option: TPlayer) => {
     setSelectedOption(option);
-    onSelect(option);
+    (option: TPlayer) => setSelectedOption(option)
     setIsOpen(false);
   };
 
@@ -14,7 +22,7 @@ const CustomDropdown = ({ options, onSelect }) => {
     <div className="relative">
       {isOpen && (
         <div className="bg-gray-300/20 text-white rounded-lg mb-2 p-1">
-          {options.map((option) => (
+          {players?.map((option: TPlayer) => (
             <div
               key={option.id}
               className="px-3 py-1.5 hover:bg-gray-300/10 cursor-pointer rounded-lg"
@@ -26,7 +34,7 @@ const CustomDropdown = ({ options, onSelect }) => {
         </div>
       )}
       <button className="bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg" onClick={() => setIsOpen(!isOpen)}>
-        {selectedOption.name}
+        {selectedOption?.name}
       </button>
     </div>
   );

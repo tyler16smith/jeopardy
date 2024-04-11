@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import CSVUploadArea from '@/components/CSVUploadArea';
+import CSVUploadArea from '@/components/Upload/CSVUploadArea';
 import useDragAndDrop from '@/hooks/useDragAndDrop';
 
 const Home = () => {

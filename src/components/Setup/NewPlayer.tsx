@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../Input'
 import useHotkey from '@/hooks/useHotkey'
+import { useSetupContext } from '@/context/SetupContext'
 
-type Props = {
-  handleAddPlayer: (name: string) => void
-  hideAddPlayer: () => void
-}
-
-const NewPlayer = ({ handleAddPlayer, hideAddPlayer }: Props) => {
+const NewPlayer = () => {
   const [name, setName] = useState<string>('')
+  const {
+    setupManagement: {
+      handleAddPlayer,
+      setAddPlayer,
+    }
+  } = useSetupContext()
+
   useHotkey('Enter', () => {
     handleAddPlayer(name)
     setName('')
@@ -16,7 +19,7 @@ const NewPlayer = ({ handleAddPlayer, hideAddPlayer }: Props) => {
 
   const handleOnBlur = () => {
     if (name) return
-    hideAddPlayer()
+    setAddPlayer(false)
   }
 
   useEffect(() => {
