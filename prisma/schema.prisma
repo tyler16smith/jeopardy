@@ -41,13 +41,14 @@ model Question {
 }
 
 model Player {
-    id         String  @id @default(cuid())
-    name       String
-    iconId     Int
-    colorId    Int
-    score      Int     @default(0)
-    gameId     String
-    questionId String?
+    id            String  @id @default(cuid())
+    name          String
+    iconId        Int
+    colorId       Int
+    score         Int     @default(0)
+    gameId        String
+    questionId    String?
+    originalOrder Int
 
     game     Game      @relation(fields: [gameId], references: [id])
     question Question? @relation(fields: [questionId], references: [id])

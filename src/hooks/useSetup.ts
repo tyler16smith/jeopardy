@@ -63,6 +63,7 @@ const useSetup = () => {
       iconId,
       colorId,
       score: 0,
+      originalOrder: players.length,
     }
     setPlayers([
       ...players,

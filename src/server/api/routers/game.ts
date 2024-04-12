@@ -12,6 +12,7 @@ export const gameRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       return await importJeopardyCSV(input.text);
     }),
+  
   getGame: publicProcedure
     .input(z.object({
       gameId: z.string().nullable(),
@@ -20,6 +21,7 @@ export const gameRouter = createTRPCRouter({
       if (!input.gameId) return null
       return await getGame(input.gameId);
     }),
+  
   saveGameDetails: publicProcedure
     .input(z.object({
       gameId: z.string(),
@@ -31,6 +33,7 @@ export const gameRouter = createTRPCRouter({
           iconId: z.number(),
           colorId: z.number(),
           score: z.number(),
+          originalOrder: z.number(),
         })
       ),
     }))
@@ -41,6 +44,7 @@ export const gameRouter = createTRPCRouter({
         input.players
       );
     }),
+  
   updatePoints: publicProcedure
     .input(z.object({
       player: z.object({
@@ -49,6 +53,8 @@ export const gameRouter = createTRPCRouter({
         iconId: z.number(),
         colorId: z.number(),
         score: z.number(),
+        gameId: z.string(),
+        originalOrder: z.number(),
       }),
       gameId: z.string(),
       questionId: z.string(),

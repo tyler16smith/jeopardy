@@ -98,6 +98,7 @@ export const saveGameDetails = async (
   name: string,
   players: TPlayer[]
 ) => {
+  debugger;
   const { error: gameError } = await supabase
     .from('Game')
     .upsert({

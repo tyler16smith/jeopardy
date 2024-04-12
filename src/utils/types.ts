@@ -4,6 +4,8 @@ export type TPlayer = {
   iconId: number
   colorId: number
   score: number
+  originalOrder: number
+  gameId?: string
 }
 
 export type TQuestion = {

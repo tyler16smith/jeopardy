@@ -62,10 +62,11 @@ const useGame = () => {
   }, [updatePoints.isSuccess]);
 
   const moveToNextPlayer = () => {
+    debugger
     if (!game?.players || !activePlayer) return;
-    const currentPlayerIndex = game?.players.findIndex(player => player.id === activePlayer?.id);
-    const nextPlayerIndex = currentPlayerIndex === game?.players.length - 1 ? 0 : currentPlayerIndex + 1;
-    setActivePlayer(game?.players[nextPlayerIndex]);
+    const nextOrder = activePlayer.originalOrder === (game?.players.length - 1) ? 0 : activePlayer.originalOrder + 1;
+    const nextPlayer = game?.players.find(player => player.originalOrder === nextOrder);
+    setActivePlayer(nextPlayer);
   }
 
   const handleSelectQuestion = (question: TQuestion) => {
