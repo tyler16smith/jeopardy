@@ -30,7 +30,7 @@ const SelectedQuestionTile = () => {
         case 'Escape':
           handleClose();
           break;
-        case 'p':
+        case 'a':
           handleAssignPoints()
           break;
         case ' ':
