@@ -15,7 +15,11 @@ const useGame = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState<TQuestion | null>(null)
   // server
-  const { data: game } = api.game.getGame.useQuery({ gameId })
+  const {
+    data: game,
+    refetch: refetchGame
+  } = api.game.getGame.useQuery({ gameId })
+  const updatePoints = api.game.updatePoints.useMutation()
 
   useEffect(() => {
     if (game?.players && !activePlayer) {
@@ -36,19 +40,37 @@ const useGame = () => {
   };
 
   const handleAssignPoints = () => {
-    console.log('assign points to team', selectedOption?.name);
-    // Assign points logic here
-
-    handleClose();
-    // move to next player
-    setTimeout(moveToNextPlayer, 300);
+    if (!selectedOption || !selectedQuestion) return;
+    const newPoints = selectedOption.score + selectedQuestion.pointValue;
+    const newPlayer = { ...selectedOption, score: newPoints };
+    updatePoints.mutate({
+      player: newPlayer,
+      gameId: gameId,
+      questionId: selectedQuestion.id
+    });
   };
+
+  useEffect(() => {
+    if (updatePoints.isSuccess) {
+      handleClose();
+      // move to next player and refetch scores
+      setTimeout(() => {
+        moveToNextPlayer();
+        refetchGame();
+      }, 300);
+    }
+  }, [updatePoints.isSuccess]);
 
   const moveToNextPlayer = () => {
     if (!game?.players || !activePlayer) return;
     const currentPlayerIndex = game?.players.findIndex(player => player.id === activePlayer?.id);
     const nextPlayerIndex = currentPlayerIndex === game?.players.length - 1 ? 0 : currentPlayerIndex + 1;
     setActivePlayer(game?.players[nextPlayerIndex]);
+  }
+
+  const handleSelectQuestion = (question: TQuestion) => {
+    if (question?.answeredBy) return;
+    setSelectedQuestion(question);
   }
 
   return {
@@ -66,6 +88,7 @@ const useGame = () => {
     setIsVisible,
     handleClose,
     handleAssignPoints,
+    handleSelectQuestion,
   }
 }
 

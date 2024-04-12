@@ -19,16 +19,6 @@ model Category {
     gameRound Game       @relation(fields: [gameId], references: [id])
 }
 
-model Question {
-    id         String @id @default(cuid())
-    text       String
-    answer     String
-    pointValue String
-    categoryId String
-
-    category Category @relation(fields: [categoryId], references: [id])
-}
-
 model Game {
     id   String   @id @default(cuid())
     name String
@@ -38,21 +28,27 @@ model Game {
     players    Player[]
 }
 
-model Player {
-    id      String @id @default(cuid())
-    name    String
-    iconId  String
-    colorId String
-    gameId  String
+model Question {
+    id         String  @id @default(cuid())
+    text       String
+    answer     String
+    pointValue Int
+    categoryId String
+    answeredBy String?
 
-    game         Game          @relation(fields: [gameId], references: [id])
-    playerScores PlayerScore[]
+    category Category @relation(fields: [categoryId], references: [id])
+    player   Player[]
 }
 
-model PlayerScore {
-    id       String @id @default(cuid())
-    score    Int    @default(0)
-    playerId String
+model Player {
+    id         String  @id @default(cuid())
+    name       String
+    iconId     Int
+    colorId    Int
+    score      Int     @default(0)
+    gameId     String
+    questionId String?
 
-    player Player @relation(fields: [playerId], references: [id])
+    game     Game      @relation(fields: [gameId], references: [id])
+    question Question? @relation(fields: [questionId], references: [id])
 }

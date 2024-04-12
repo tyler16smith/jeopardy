@@ -1,10 +1,12 @@
 import { useGameContext } from '@/context/GameContext'
+import { TQuestion } from '@/utils/types'
+import classNames from 'classnames'
 
 const MainBoard = () => {
   const {
     gameManagement: {
       game,
-      setSelectedQuestion,
+      handleSelectQuestion,
     }
   } = useGameContext()
 
@@ -21,13 +23,18 @@ const MainBoard = () => {
       </div>
       <div className="grid grid-cols-5 gap-1.5 md:gap-3 mt-1.5 md:mt-3">
         {game?.questions.map(questionCategory => (
-          questionCategory.questions.map((question: any) => (
+          questionCategory.questions.map((question: TQuestion) => (
             <div
               key={question.id}
-              onClick={() => setSelectedQuestion(question)}
-              className="flex justify-center items-center w-full h-20 md:h-32 bg-gray-300/30 hover:bg-gray-300/50 rounded-lg cursor-pointer"
+              onClick={() => handleSelectQuestion(question)}
+              className={classNames(
+                "flex justify-center items-center w-full h-20 md:h-32 rounded-lg", {
+                "bg-gray-300/30 hover:bg-gray-300/50 text-white cursor-pointer": !question.answeredBy,
+                "bg-gray-300/5 opacity-50 text-gray-500 cursor-not-allowed": question.answeredBy,
+              }
+              )}
             >
-              <div className="text-xl md:text-3xl text-white text-center">
+              <div className="text-xl md:text-3xl text-center">
                 {question.pointValue}
               </div>
             </div>

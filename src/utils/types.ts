@@ -3,6 +3,7 @@ export type TPlayer = {
   name: string
   iconId: number
   colorId: number
+  score: number
 }
 
 export type TQuestion = {
@@ -10,6 +11,7 @@ export type TQuestion = {
   text: string
   answer: string
   pointValue: number
+  answeredBy: string | null
   category: {
     id: string
     title: string

@@ -21,11 +21,6 @@ export const getGame = async (gameId: string) => {
     .select('*')
     .eq('gameId', gameId)
 
-  if (categoriesError) {
-    console.error('Error fetching categories:', categoriesError)
-    return
-  }
-
   // get questions
   const {
     data: questions,
@@ -37,13 +32,17 @@ export const getGame = async (gameId: string) => {
       text,
       answer,
       pointValue,
+      answeredBy,
       category:Category(id, title, gameId)
     `)
     .eq('category.gameId', gameId)
     .order('pointValue', { ascending: true })
 
-  if (questionsError) {
-    console.error('Error fetching questions:', error)
+  if (gameError || categoriesError || questionsError) {
+    console.error(
+      'Error fetching game data:',
+      gameError || categoriesError || questionsError
+    )
     return
   }
 
@@ -83,6 +82,9 @@ export const getGame = async (gameId: string) => {
     .sort((a, b) => parseInt(a) - parseInt(b))
     .map(pointValue => groupedByPointValue[pointValue])
 
+  // sort players by score
+  players?.sort((a, b) => b.score - a.score)
+
   return {
     game,
     players,
@@ -114,6 +116,32 @@ export const saveGameDetails = async (
 
   if (gameError || playerError) {
     console.error('Error saving game details:', gameError || playerError)
+    return false
+  }
+
+  return true
+}
+
+export const savePoints = async (
+  player: TPlayer,
+  gameId: string,
+  questionId: string
+) => {
+  const { error } = await supabase
+    .from('Player')
+    .upsert({
+      ...player,
+      gameId
+    })
+  const { error: questionError } = await supabase
+    .from('Question')
+    .update({
+      answeredBy: player.id
+    })
+    .eq('id', questionId)
+
+  if (error || questionError) {
+    console.error('Error saving points:', error)
     return false
   }
 
