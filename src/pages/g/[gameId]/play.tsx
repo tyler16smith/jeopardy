@@ -1,7 +1,7 @@
 import LeaderBoard from '@/components/Game/LeaderBoard'
 import LoadingGame from '@/components/Game/LoadingGame'
 import MainBoard from '@/components/Game/MainBoard'
-import SelectedTile from '@/components/Game/SelectedTile'
+import SelectedTile from '@/components/Game/Tile/SelectedTile'
 import { GameProvider, useGameContext } from '@/context/GameContext'
 
 const Game = () => {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { api } from '@/utils/api';
 import { TPlayer, TQuestion } from '@/utils/types';
+import toast from 'react-hot-toast';
 
 const useGame = () => {
   const { query } = useRouter()
@@ -16,6 +17,7 @@ const useGame = () => {
   const [selectedQuestion, setSelectedQuestion] = useState<TQuestion | null>(null)
   const [dailyDoublePointsWagered, setDailyDoublePointsWagered] = useState<number | null>(null)
   const [wageredPoints, setWageredPoints] = useState<boolean>(false)
+  const wagerMessage = `You can wager up to ${activePlayer && activePlayer?.score < 1000 ? '1000' : activePlayer?.score} points.`
   // server
   const {
     data: game,
@@ -51,15 +53,24 @@ const useGame = () => {
     }, 300);
   };
 
-  const handleAssignPoints = () => {
-    // TODO: handle daily double; if correct add points, if wrong subtract points
-    if (!selectedOption || !selectedQuestion) return;
-    const newPoints = selectedOption.score + (
-      dailyDoublePointsWagered ||
-      selectedQuestion.pointValue
-    );
+  const handleDoubleJeopardy = (result: 'correct' | 'wrong') => {
+    if (!selectedOption || !selectedQuestion || !dailyDoublePointsWagered) return;
+    const newPoints = result === 'correct' ?
+      selectedOption.score + dailyDoublePointsWagered :
+      selectedOption.score - dailyDoublePointsWagered;
     const newPlayer = { ...selectedOption, score: newPoints };
     setDailyDoublePointsWagered(null);
+    updatePoints.mutate({
+      player: newPlayer,
+      gameId: gameId,
+      questionId: selectedQuestion.id
+    });
+  }
+
+  const handleAssignPoints = () => {
+    if (!selectedOption || !selectedQuestion) return;
+    const newPoints = selectedOption.score + selectedQuestion.pointValue
+    const newPlayer = { ...selectedOption, score: newPoints };
     updatePoints.mutate({
       player: newPlayer,
       gameId: gameId,
@@ -95,6 +106,26 @@ const useGame = () => {
     setSelectedQuestion(question);
   }
 
+  const handleSetDailyDoubleWager = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!activePlayer) return;
+    const newWager = parseInt(e.target.value)
+    // handle wager limits
+    if (newWager < 0) {
+      toast.error('You can only wager positive points.')
+      return;
+    }
+    if (activePlayer.score < 1000 && newWager > 1000) {
+      toast.error('You can only wager up to 1000 points.')
+      return;
+    }
+    if (activePlayer.score > 1000 && newWager > activePlayer.score) {
+      toast.error('You can only wager points you have.')
+      return;
+    }
+    // set wager
+    setDailyDoublePointsWagered(newWager)
+  }
+
   return {
     game,
     players: game?.players,
@@ -113,8 +144,11 @@ const useGame = () => {
     handleSelectQuestion,
     dailyDoublePointsWagered,
     setDailyDoublePointsWagered,
+    handleDoubleJeopardy,
     wageredPoints,
     setWageredPoints,
+    wagerMessage,
+    handleSetDailyDoubleWager,
   }
 }
 
