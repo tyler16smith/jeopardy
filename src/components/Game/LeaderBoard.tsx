@@ -15,7 +15,7 @@ const LeaderBoard = () => {
         {game?.players?.map(player => (
           <motion.div
             key={player.id}
-            layout // This prop enables automatic reordering with animation
+            layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
