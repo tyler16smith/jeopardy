@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { api } from '@/utils/api';
-import { getUniqueIconAndColor } from '@/components/Setup/utils';
+import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
 import cuid from 'cuid';
 import toast from 'react-hot-toast';
 import { TPlayer } from '@/utils/types';
@@ -12,17 +12,29 @@ const useSetup = () => {
   const router = useRouter()
   const gameId = router.query.gameId as string
   // local
-  const [gameName, setGameName] = useState<string>('')
-  const [players, setPlayers] = useState<TPlayer[]>([])
+  const [gameName, setGameName] = useState<string | null>(null)
+  const [players, setPlayers] = useState<TPlayer[] | null>(null)
   const [addPlayer, setAddPlayer] = useState<boolean>(false)
   const [loadingStartGame, setLoadingStartGame] = useState(false)
   const lastPlayerRef = useRef<HTMLDivElement | null>(null)
   // server
-  const saveGameDetails = api.game.saveGameDetails.useMutation()
+  const { data: setupDetails } =
+    api.game.getSetupDetails.useQuery(
+      { gameId },
+      {
+        refetchInterval: false,
+        enabled: !!gameId
+      },
+    )
+  const saveSetupDetails = api.game.saveSetupDetails.useMutation()
 
   useEffect(() => {
-    document.getElementById('new-game-name-input')?.focus()
-  }, [])
+    if (setupDetails) {
+      setGameName(setupDetails.game.name)
+      setPlayers(setupDetails.players)
+    }
+  }, [setupDetails])
+  console.log("PLAYERS: ", players)
   
   useEffect(() => {
     if (lastPlayerRef.current) {
@@ -36,8 +48,8 @@ const useSetup = () => {
 
   const startGame = async () => {
     setLoadingStartGame(true)
-    debugger;
-    const success = await saveGameDetails.mutateAsync({
+    if (!gameName || !players) return
+    const success = await saveSetupDetails.mutateAsync({
       gameId,
       name: gameName,
       players: players,
@@ -52,6 +64,7 @@ const useSetup = () => {
 
 
   const handleAddPlayer = (name: string) => {
+    if (!players) return
     if (!name) {
       toast.error('Please enter a name')
       return
@@ -64,6 +77,7 @@ const useSetup = () => {
       colorId,
       score: 0,
       originalOrder: players.length,
+      gameId,
     }
     setPlayers([
       ...players,
@@ -72,6 +86,7 @@ const useSetup = () => {
   }
 
   const handleDeletePlayer = (id: string) => {
+    if (!players) return
     setPlayers(players.filter(player => player.id !== id))
   }
 

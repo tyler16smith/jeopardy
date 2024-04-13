@@ -6,7 +6,7 @@ import {
   Shovel, Smile, Squirrel, Star, Sun,
   Tractor, TrafficCone, TreePine, Trophy, Turtle
 } from 'lucide-react';
-import { TPlayer } from './AddPlayers';
+import { TPlayer } from './types';
 
 type TIconLibrary = {
   [key: number]: JSX.Element

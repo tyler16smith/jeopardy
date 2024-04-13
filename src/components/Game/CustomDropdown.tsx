@@ -1,4 +1,5 @@
 import { useGameContext } from '@/context/GameContext';
+import useHotkey from '@/hooks/useHotkey';
 import { TPlayer } from '@/utils/types';
 import { useState } from 'react';
 
@@ -11,6 +12,7 @@ const CustomDropdown = () => {
     }
   } = useGameContext()
   const [isOpen, setIsOpen] = useState(false);
+  useHotkey('t', () => setIsOpen(true));
 
   const handleSelect = (option: TPlayer) => {
     setSelectedOption(option);

@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 type InputProps = {
-  value: string
+  value: string | null
   setValue: (value: string) => void
   id?: string
   placeholder?: string
@@ -16,6 +16,13 @@ const Input = ({
   placeholder,
   onBlur,
 }: InputProps) => {
+
+  if (value === null) {
+    return (
+      <div className='flex justify-center items-center w-full h-10 bg-gray-400/10 rounded-md' />
+    )
+  }
+
   return (
     <input
       id={id}

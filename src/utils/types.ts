@@ -5,7 +5,7 @@ export type TPlayer = {
   colorId: number
   score: number
   originalOrder: number
-  gameId?: string
+  gameId: string
 }
 
 export type TQuestion = {
@@ -14,6 +14,8 @@ export type TQuestion = {
   answer: string
   pointValue: number
   answeredBy: string | null
+  imageURL: string | null
+  isDailyDouble: boolean
   category: {
     id: string
     title: string

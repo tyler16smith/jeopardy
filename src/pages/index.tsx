@@ -5,6 +5,7 @@ import useDragAndDrop from '@/hooks/useDragAndDrop';
 const Home = () => {
   const {
     dragging,
+    processing,
     handleDragEnter,
     handleDragOver,
     handleDragLeave,
@@ -41,7 +42,11 @@ const Home = () => {
           Welcome to <span className="text-jeopardy">Jeopardy!</span>
         </h1>
         <div className="flex flex-col justify-center items-center gap-4">
-          <CSVUploadArea dragging={dragging} handleFileChange={handleFileChange} />
+          <CSVUploadArea
+            dragging={dragging}
+            processing={processing}
+            handleFileChange={handleFileChange}
+          />
           <p className="text-sm text-gray-300">
             Download an example CSV file <a href="/data/example.csv" className="text-[#ffcc00]">here</a>.
           </p>

@@ -1,13 +1,16 @@
 // useDragAndDrop.ts hook
 
 import { api } from '@/utils/api';
-import { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const useDragAndDrop = () => {
   const [dragging, setDragging] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const [dragCounter, setDragCounter] = useState(0); // New state for drag counter
   const uploadCSV = api.game.importCSV.useMutation()
+  const router = useRouter()
 
   const handleDragEnter = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -48,26 +51,40 @@ const useDragAndDrop = () => {
   }, []);
 
   const handleFileUpload = useCallback(async (file: File) => {
-    debugger;
-    
+    setProcessing(true);
     try {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const text = e.target.result;
+        const text = e?.target?.result;
+        if (!text || typeof text !== 'string') {
+          throw new Error('No CSV data provided.');
+        }
         // Now you have the CSV content as a text string, you can send this to your backend
-        const response = await uploadCSV.mutateAsync({ text: text });
+        uploadCSV.mutate({ text: text });
       };
       reader.readAsText(file);
-      
-      toast.success('File uploaded successfully!');
     } catch (error) {
       console.error('Error uploading file:', error);
       toast.error('Error uploading file');
     }
   }, []);
 
+  useEffect(() => {
+    if (uploadCSV.data) {
+      router.push(`g/${uploadCSV.data}/setup`);
+    }
+  }, [uploadCSV.data]);
+  
+  useEffect(() => {
+    if (uploadCSV.isError) {
+      toast.error('Error uploading file. Please try again.');
+      setProcessing(false);
+    }
+  }, [uploadCSV.isError]);
+
   return {
     dragging,
+    processing,
     handleDragEnter,
     handleDragOver,
     handleDragLeave,

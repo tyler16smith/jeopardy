@@ -29,12 +29,14 @@ model Game {
 }
 
 model Question {
-    id         String  @id @default(cuid())
-    text       String
-    answer     String
-    pointValue Int
-    categoryId String
-    answeredBy String?
+    id            String  @id @default(cuid())
+    text          String
+    answer        String
+    imageURL      String?
+    pointValue    Int
+    categoryId    String
+    isDailyDouble Boolean @default(false)
+    answeredBy    String?
 
     category Category @relation(fields: [categoryId], references: [id])
     player   Player[]
@@ -46,6 +48,7 @@ model Player {
     iconId        Int
     colorId       Int
     score         Int     @default(0)
+    onTurn        Boolean @default(false)
     gameId        String
     questionId    String?
     originalOrder Int

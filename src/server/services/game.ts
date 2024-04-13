@@ -66,18 +66,26 @@ export const getGame = async (gameId: string) => {
   }; 
 }
 
-export const saveGameDetails = async (
+export const getSetupDetails = async (gameId: string) => {
+  const game = await db.game.findUnique({
+    where: { id: gameId },
+    include: { players: true }
+  });
+
+  if (!game)
+    throw new Error('Game not found');
+
+  return game;
+}
+
+export const saveSetupDetails = async (
   gameId: string,
   name: string,
   players: TPlayer[]
 ) => {
   await db.game.upsert({
-    where: {
-      id: gameId
-    },
-    update: {
-      name
-    },
+    where: { id: gameId },
+    update: { name },
     create: {
       id: gameId,
       name
@@ -125,4 +133,11 @@ export const savePoints = async (
   }
 
   return true
+}
+
+export const savePlayerTurn = async (playerId: string) => {
+  await db.player.update({
+    where: { id: playerId },
+    data: { onTurn: true }
+  });
 }

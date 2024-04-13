@@ -14,20 +14,36 @@ const AddPlayers = () => {
       loadingStartGame,
       lastPlayerRef,
       handleDeletePlayer,
-      handleAddPlayer,
       startGame,
     }
   } = useSetupContext()
+
+  const LoadingPlayers = () => (
+    Array.from({ length: 4 }, (_, i) => (
+      <div
+        key={i}
+        className={classNames(
+          'flex justify-between items-center gap-2',
+          'p-2 h-[52px] mt-1.5 bg-gray-400/10',
+          'rounded-md animate-pulse',
+        )}
+      />
+    ))
+  )
 
   return (
     <>
       <label htmlFor="name" className='text-lg'>Players</label>
       <div className='h-full max-h-[50vh] overflow-auto scrollbar'>
-        {players.map((player, index) => (
-          <div key={player.id} ref={index === players.length - 1 ? lastPlayerRef : null}>
-            <Player player={player} handleDelete={handleDeletePlayer} />
-          </div>
-        ))}
+        {players === null ? (
+          <LoadingPlayers />
+        ) : (
+          players.map((player: any, index: number) => (
+            <div key={player.id} ref={index === players.length - 1 ? lastPlayerRef : null}>
+              <Player player={player} handleDelete={handleDeletePlayer} />
+            </div>
+          ))
+        )}
       </div>
       {addPlayer && (
         <NewPlayer />

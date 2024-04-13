@@ -1,5 +1,5 @@
 import { useGameContext } from '@/context/GameContext'
-import { colorLibrary, iconLibrary } from '../Setup/utils'
+import { colorLibrary, iconLibrary } from '../../utils/colors-and-icons'
 import classNames from 'classnames'
 import { motion } from 'framer-motion';
 

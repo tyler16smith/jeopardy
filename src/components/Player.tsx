@@ -1,7 +1,7 @@
 import React from 'react'
 import { TPlayer } from './Setup/AddPlayers'
 import { Trash } from 'lucide-react'
-import { colorLibrary, iconLibrary } from './Setup/utils'
+import { colorLibrary, iconLibrary } from '../utils/colors-and-icons'
 
 type PlayerProps = {
   player: TPlayer

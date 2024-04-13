@@ -1,14 +1,26 @@
-Category,Question,Answer,Point Value
-History,Who was the first president of the United States?,George Washington,200
-Science,What is the chemical symbol for gold?,Au,200
-Literature,Who wrote "To Kill a Mockingbird"?,Harper Lee,200
-Geography,What is the capital of France?,Paris,200
-History,What year did the Titanic sink?,1912,400
-Science,What planet is known as the Red Planet?,Mars,400
-Literature,Who is the author of "1984"?,George Orwell,400
-Geography,What is the longest river in the world?,Nile,400
-Players
-Alice
-Bob
-Charles
-Diana
+question,answer,imageURL_optional,pointValue,isDailyDouble,category,~~,player,~~,gameName
+History question 100,History answer 100,,100,,History,,Tyler,,Smith Family Jeopardy
+History question 200,History answer 200,,200,,History,,Sage,,
+History question 300,History answer 300,,300,,History,,Ryan,,
+History question 400,History answer 400,,400,,History,,Charlee,,
+History question 500,History answer 500,,500,true,History,,,,
+Math question 100,Math answer 100,,100,,Math,,,,
+Math question 200,Math answer 200,,200,,Math,,,,
+Math question 300,Math answer 300,,300,,Math,,,,
+Math question 400,Math answer 400,,400,,Math,,,,
+Math question 500,Math answer 500,,500,true,Math,,,,
+Science question 100,Science answer 100,,100,,Science,,,,
+Science question 200,Science answer 200,,200,,Science,,,,
+Science question 300,Science answer 300,,300,,Science,,,,
+Science question 400,Science answer 400,,400,,Science,,,,
+Science question 500,Science answer 500,,500,true,Science,,,,
+English question 100,English answer 100,,100,,English,,,,
+English question 200,English answer 200,,200,,English,,,,
+English question 300,English answer 300,,300,,English,,,,
+English question 400,English answer 400,,400,,English,,,,
+English question 500,English answer 500,,500,true,English,,,,
+PE question 100,PE answer 100,,100,,PE,,,,
+PE question 200,PE answer 200,,200,,PE,,,,
+PE question 300,PE answer 300,,300,,PE,,,,
+PE question 400,PE answer 400,,400,,PE,,,,
+PE question 500,PE answer 500,,500,true,PE,,,,

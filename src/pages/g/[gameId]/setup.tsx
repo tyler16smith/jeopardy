@@ -16,8 +16,12 @@ const NewGame = () => {
   return (
     <div className='flex justify-center items-center w-full h-full'>
       <div className='flex flex-col gap-3 w-full max-w-96'>
-        <p className='text-2xl font-bold text-center mb-5'>{gameName || 'New Game'}</p>
-        <label htmlFor="name" className='text-md'>Game Name</label>
+        <p className='text-2xl font-bold text-center mb-5'>
+          {gameName && gameName.length > 0 ? gameName : 'New Game'}
+        </p>
+        <label htmlFor="name" className='text-md'>
+          Game Name
+        </label>
         <Input
           id='new-game-name-input'
           value={gameName}
