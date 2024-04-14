@@ -30,7 +30,7 @@ const Input = ({
       type="text"
       value={value}
       onChange={e => setValue(e.target.value)}
-      placeholder={placeholder || ""}
+      placeholder={placeholder ?? ""}
       onBlur={onBlur}
       className={classNames(
         'border border-gray-300 rounded p-2 backdrop-blur-lg',

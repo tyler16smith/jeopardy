@@ -9,7 +9,7 @@ export const gameRouter = createTRPCRouter({
     .input(z.object({
       text: z.string(),
     }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input }): Promise<string> => {
       return await importJeopardyCSV(input.text);
     }),
   

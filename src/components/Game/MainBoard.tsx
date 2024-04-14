@@ -1,5 +1,5 @@
 import { useGameContext } from '@/context/GameContext'
-import { type TQuestion } from '@/utils/types'
+import { TGroupQuestions, type TQuestion } from '@/utils/types'
 import classNames from 'classnames'
 
 const MainBoard = () => {
@@ -13,7 +13,7 @@ const MainBoard = () => {
   return (
     <div className='w-full'>
       <div className="grid grid-cols-5 gap-1.5 md:gap-3">
-        {game?.categories.map((category, i) => (
+        {game?.categories.map(category => (
           <div key={category.id} className="flex justify-center items-center w-full h-16 md:h-20 bg-gray-300/10 rounded-lg cursor-pointer">
             <div className="text-sm md:text-xl font-bold text-gray-300 text-center">
               {category.title}
@@ -22,8 +22,8 @@ const MainBoard = () => {
         ))}
       </div>
       <div className="grid grid-cols-5 gap-1.5 md:gap-3 mt-1.5 md:mt-3">
-        {game?.questions.map(questionCategory => (
-          questionCategory.questions.map((question: TQuestion) => (
+        {game?.questions.map((questionCategory: TGroupQuestions | undefined) => (
+          questionCategory?.questions.map((question: TQuestion) => (
             <div
               key={question.id}
               onClick={() => handleSelectQuestion(question)}

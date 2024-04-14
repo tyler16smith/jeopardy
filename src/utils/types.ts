@@ -22,3 +22,15 @@ export type TQuestion = {
     gameId: string
   }
 }
+
+export type TGroupQuestions = {
+  pointValue: number
+  questions: TQuestion[]
+}
+
+export type TCategory = {
+  id: string
+  title: string
+  gameId: string
+  questions: TQuestion[]
+}

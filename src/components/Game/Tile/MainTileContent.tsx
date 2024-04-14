@@ -27,7 +27,7 @@ const MainTileContent = () => {
         <div className='flex flex-col justify-center items-center gap-5'>
           <input
             type='number'
-            value={dailyDoublePointsWagered || 0}
+            value={dailyDoublePointsWagered ?? 0}
             onChange={handleSetDailyDoubleWager}
             className={classNames(
               'text-5xl text-center font-bold text-white',

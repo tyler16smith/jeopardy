@@ -1,14 +1,37 @@
 import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
 import supabase from '@/utils/supabase';
-import { type TPlayer, TQuestion } from '@/utils/types';
+import { type TPlayer } from '@/utils/types';
 import cuid from 'cuid';
 
-export const importJeopardyCSV = async (text: string) => {
+type Game = {
+  id?: string
+  name?: string
+}
+
+type Category = {
+  id: string
+  title: string
+  gameId: string
+}
+
+type Question = {
+  id: string
+  text: string
+  answer: string
+  imageURL: string | null
+  pointValue: number
+  isDailyDouble: boolean
+  categoryId: string
+}
+
+export const importJeopardyCSV = async (
+  text: string
+): Promise<string> => {
   if (!text) throw new Error('No csv data provided.');
   // initialize category stack (unique array of categories)
-  let game: any = {};
-  const categories: any[] = [];
-  const questions: any[] = [];
+  let game: Game = {};
+  const categories: Category[] = [];
+  const questions: Question[] = [];
   const players: TPlayer[] = [];
 
   // Parse the CSV
@@ -44,7 +67,7 @@ export const importJeopardyCSV = async (text: string) => {
         iconId,
         colorId,
         score: 0,
-        gameId: game.id,
+        gameId: game.id!,
         originalOrder: players.length,
       });
     }
@@ -54,8 +77,8 @@ export const importJeopardyCSV = async (text: string) => {
       newCategoryId = cuid()
       categories.push({
         id: newCategoryId,
-        title: category,
-        gameId: game.id,
+        title: category!,
+        gameId: game.id!,
       });
     }
     // questions
@@ -68,7 +91,7 @@ export const importJeopardyCSV = async (text: string) => {
       id: cuid(),
       text: question,
       answer: answer,
-      imageURL: imageURL_optional || null,
+      imageURL: imageURL_optional ?? null,
       pointValue: parseInt(pointValue),
       isDailyDouble: isDailyDouble?.toLowerCase() === 'true',
       categoryId: newCategoryId,
@@ -99,5 +122,5 @@ export const importJeopardyCSV = async (text: string) => {
   if (playersError) throw playersError;
 
   console.log('CSV import completed successfully.');
-  return game.id;
+  return game.id!;
 }

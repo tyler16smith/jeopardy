@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import NewPlayer from './NewPlayer'
 import Player from '../Player'
 import { useSetupContext } from '@/context/SetupContext'
+import { TPlayer } from '@/utils/types'
 
 const AddPlayers = () => {
   const {
@@ -38,9 +39,15 @@ const AddPlayers = () => {
         {players === null ? (
           <LoadingPlayers />
         ) : (
-          players.map((player: any, index: number) => (
-            <div key={player.id} ref={index === players.length - 1 ? lastPlayerRef : null}>
-              <Player player={player} handleDelete={handleDeletePlayer} />
+          players.map((player: TPlayer, index: number) => (
+            <div
+              key={player.id}
+              ref={index === players.length - 1 ? lastPlayerRef : null}
+            >
+              <Player
+                player={player}
+                handleDelete={handleDeletePlayer}
+              />
             </div>
           ))
         )}

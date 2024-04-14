@@ -1,6 +1,8 @@
 import supabase from "@/utils/supabase"
-import { type TPlayer } from "@/utils/types"
+import { TGroupQuestions, TQuestion, type TPlayer } from "@/utils/types"
 import { db } from "../db"
+
+type TGroupByPointValue = Record<string, TGroupQuestions>
 
 export const getGame = async (gameId: string) => {
   const game = await db.game.findUnique({
@@ -27,7 +29,7 @@ export const getGame = async (gameId: string) => {
   const { players, categories } = game;
 
   // Group questions by pointValue across all categories
-  const groupedByPointValue: any = {};
+  const groupedByPointValue: TGroupByPointValue = {};
   categories.forEach(category => {
     category.questions.forEach(question => {
       const { pointValue } = question;
@@ -37,13 +39,13 @@ export const getGame = async (gameId: string) => {
           questions: []
         };
       }
-      groupedByPointValue[pointValue].questions.push({ ...question, category });
+      groupedByPointValue[pointValue]?.questions.push({ ...question, category });
     });
   });
 
   // Sort questions within each pointValue group by the category order
-  Object.values(groupedByPointValue).forEach((group: any) => {
-    group.questions.sort((a: any, b: any) => {
+  Object.values(groupedByPointValue).forEach((group: TGroupQuestions) => {
+    group.questions.sort((a: TQuestion, b: TQuestion) => {
       const indexA = categories.findIndex(cat => cat.id === a.category.id);
       const indexB = categories.findIndex(cat => cat.id === b.category.id);
       return indexA - indexB;
@@ -63,7 +65,7 @@ export const getGame = async (gameId: string) => {
     players,
     categories,
     questions: sortedGroups
-  }; 
+  };
 }
 
 export const getSetupDetails = async (gameId: string) => {
@@ -127,7 +129,7 @@ export const savePoints = async (
     })
     .eq('id', questionId)
 
-  if (error || questionError) {
+  if (error ?? questionError) {
     console.error('Error saving points:', error)
     return false
   }

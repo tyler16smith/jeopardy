@@ -33,7 +33,7 @@ const useGame = () => {
   useEffect(() => {
     if (game?.players && !activePlayer) {
       const nextPlayer =
-        game?.players.find(player => player.onTurn) ||
+        game?.players.find(player => player.onTurn) ??
         game?.players[0];
       setActivePlayer(nextPlayer);
     }

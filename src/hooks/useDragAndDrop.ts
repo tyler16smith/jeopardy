@@ -38,15 +38,15 @@ const useDragAndDrop = () => {
   const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setDragging(false);
-    setDragCounter(0); // Reset drag counter on drop
+    setDragCounter(0);
     if (event.dataTransfer.files?.[0]) {
-      handleFileUpload(event.dataTransfer.files[0]);
+      void handleFileUpload(event.dataTransfer.files[0]);
     }
   }, []);
 
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.[0]) {
-      handleFileUpload(event.target.files[0]);
+      void handleFileUpload(event.target.files[0]);
     }
   }, []);
 
@@ -71,7 +71,7 @@ const useDragAndDrop = () => {
 
   useEffect(() => {
     if (uploadCSV.data) {
-      router.push(`g/${uploadCSV.data}/setup`);
+      void router.push(`g/${uploadCSV.data}/setup`);
     }
   }, [uploadCSV.data]);
   

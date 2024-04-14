@@ -3,14 +3,14 @@ import React from 'react'
 const LoadingGame = () => {
   const LoadingCategories = () => (
     <div className="grid grid-cols-5 gap-1 md:gap-3 w-full">
-      {[...Array(5)].map((_, i) => (
-        <div key={i} className="h-16 md:h-20 bg-gray-300/5 animate-pulse rounded-lg" />
+      {Array.from({ length: 5 }, (_, i) => (
+        <div key={i} className="h-16 md:h-20 bg-gray-300 animate-pulse rounded-lg" />
       ))}
     </div>
   )
   const LoadingQuestions = () => (
     <div className="grid grid-cols-5 gap-1 md:gap-3 w-full mt-3">
-      {[...Array(25)].map((_, i) => (
+      {Array.from({ length: 25 }, (_, i) => (
         <div key={i} className="h-20 md:h-32 bg-gray-300/10 animate-pulse rounded-lg" />
       ))}
     </div>
@@ -19,7 +19,7 @@ const LoadingGame = () => {
   const LoadingLeaderboard = () => (
     <div className="w-full mt-6">
       <p className='text-2xl font-bold text-gray-300/40 mb-4'>Leaderboard</p>
-      {[...Array(5)].map((_, i) => (
+      {Array.from({ length: 5 }, (_, i) => (
         <div key={i} className="h-12 mt-2 bg-gray-300/10 animate-pulse rounded-lg" />
       ))}
     </div>
