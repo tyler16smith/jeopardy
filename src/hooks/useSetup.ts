@@ -6,7 +6,7 @@ import { api } from '@/utils/api';
 import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
 import cuid from 'cuid';
 import toast from 'react-hot-toast';
-import { TPlayer } from '@/utils/types';
+import { type TPlayer } from '@/utils/types';
 
 const useSetup = () => {
   const router = useRouter()
@@ -59,7 +59,7 @@ const useSetup = () => {
       setLoadingStartGame(false)
       return
     }
-    router.push(`/g/${gameId}/play`)
+    void router.push(`/g/${gameId}/play`)
   }
 
 

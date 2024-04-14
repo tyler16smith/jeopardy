@@ -6,11 +6,9 @@ import {
   Shovel, Smile, Squirrel, Star, Sun,
   Tractor, TrafficCone, TreePine, Trophy, Turtle
 } from 'lucide-react';
-import { TPlayer } from './types';
+import { type TPlayer } from './types';
 
-type TIconLibrary = {
-  [key: number]: JSX.Element
-}
+type TIconLibrary = Record<number, JSX.Element>
 
 export const NUM_ICONS = 22
 export const iconLibrary: TIconLibrary = {
@@ -38,9 +36,7 @@ export const iconLibrary: TIconLibrary = {
   21: <HandMetal size={24} />,
 }
 
-type TColorLibrary = {
-  [key: number]: string
-}
+type TColorLibrary = Record<number, string>
 export const NUM_COLORS = 12
 export const colorLibrary: TColorLibrary = {
   0: '#fcba03',

@@ -1,5 +1,5 @@
 import { useGameContext } from '@/context/GameContext'
-import { TQuestion } from '@/utils/types'
+import { type TQuestion } from '@/utils/types'
 import classNames from 'classnames'
 
 const MainBoard = () => {

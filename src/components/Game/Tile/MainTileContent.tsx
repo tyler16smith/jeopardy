@@ -8,7 +8,6 @@ const MainTileContent = () => {
       selectedQuestion,
       showAnswer,
       dailyDoublePointsWagered,
-      setDailyDoublePointsWagered,
       wageredPoints,
       setWageredPoints,
       wagerMessage,

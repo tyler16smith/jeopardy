@@ -1,6 +1,6 @@
 import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
 import supabase from '@/utils/supabase';
-import { TPlayer, TQuestion } from '@/utils/types';
+import { type TPlayer, TQuestion } from '@/utils/types';
 import cuid from 'cuid';
 
 export const importJeopardyCSV = async (text: string) => {

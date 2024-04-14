@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { api } from '@/utils/api';
-import { TPlayer, TQuestion } from '@/utils/types';
+import { type TPlayer, type TQuestion } from '@/utils/types';
 import toast from 'react-hot-toast';
 
 const useGame = () => {
@@ -85,7 +85,7 @@ const useGame = () => {
       setTimeout(() => {
         moveToNextPlayer();
         setWageredPoints(false);
-        refetchGame();
+        void refetchGame();
       }, 300);
     }
   }, [updatePoints.isSuccess]);

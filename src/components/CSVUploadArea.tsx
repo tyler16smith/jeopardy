@@ -13,7 +13,7 @@ const CSVUploadArea = ({
   handleFileChange
 }: CSVUploadAreaProps) => {
   // Ref for the file input
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDivClick = () => {
     fileInputRef?.current?.click();

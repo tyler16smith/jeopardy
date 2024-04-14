@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import CSVUploadArea from '@/components/Upload/CSVUploadArea';
+import CSVUploadArea from '@/components/CSVUploadArea';
 import useDragAndDrop from '@/hooks/useDragAndDrop';
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
     <div
       className="flex flex-col items-center justify-center min-h-screen relative"
       onDragOver={handleDragOver}
-      onDragEnter={handleDragEnter} // Updated to use handleDragEnter
+      onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >

@@ -1,5 +1,5 @@
 import supabase from "@/utils/supabase"
-import { TPlayer } from "@/utils/types"
+import { type TPlayer } from "@/utils/types"
 import { db } from "../db"
 
 export const getGame = async (gameId: string) => {

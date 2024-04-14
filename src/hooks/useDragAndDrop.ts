@@ -39,13 +39,13 @@ const useDragAndDrop = () => {
     event.preventDefault();
     setDragging(false);
     setDragCounter(0); // Reset drag counter on drop
-    if (event.dataTransfer.files && event.dataTransfer.files[0]) {
+    if (event.dataTransfer.files?.[0]) {
       handleFileUpload(event.dataTransfer.files[0]);
     }
   }, []);
 
   const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
+    if (event.target.files?.[0]) {
       handleFileUpload(event.target.files[0]);
     }
   }, []);

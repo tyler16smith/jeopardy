@@ -1,6 +1,6 @@
 import { useGameContext } from '@/context/GameContext';
 import useHotkey from '@/hooks/useHotkey';
-import { TPlayer } from '@/utils/types';
+import { type TPlayer } from '@/utils/types';
 import { useState } from 'react';
 
 const CustomDropdown = () => {
