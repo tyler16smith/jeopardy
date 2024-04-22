@@ -24,7 +24,10 @@ const MainBoard = () => {
       </div>
       <div className={`grid ${gridCols} gap-1.5 md:gap-3 mt-1.5 md:mt-3`}>
         {game?.categories.map((category: TCategory) => (
-          <div className='flex flex-col items-center gap-1.5 md:gap-3'>
+          <div
+            key={category.id}
+            className='flex flex-col items-center gap-1.5 md:gap-3'
+          >
             {category?.questions.map((question: TQuestion) => (
               <div
                 key={question.id}
