@@ -26,45 +26,30 @@ export const getGame = async (gameId: string) => {
   if (!game)
     throw new Error('Game not found');
 
-  const { players, categories } = game;
-
-  // Group questions by pointValue across all categories
-  const groupedByPointValue: TGroupByPointValue = {};
-  categories.forEach(category => {
-    category.questions.forEach(question => {
-      const { pointValue } = question;
-      if (!groupedByPointValue[pointValue]) {
-        groupedByPointValue[pointValue] = {
-          pointValue,
-          questions: []
-        };
-      }
-      groupedByPointValue[pointValue]?.questions.push({ ...question, category });
-    });
-  });
-
-  // Sort questions within each pointValue group by the category order
-  Object.values(groupedByPointValue).forEach((group: TGroupQuestions) => {
-    group.questions.sort((a: TQuestion, b: TQuestion) => {
-      const indexA = categories.findIndex(cat => cat.id === a.category.id);
-      const indexB = categories.findIndex(cat => cat.id === b.category.id);
-      return indexA - indexB;
-    });
-  });
-
-  // Convert the grouped object into an array sorted by pointValue
-  const sortedGroups = Object.keys(groupedByPointValue)
-    .sort((a, b) => parseInt(a) - parseInt(b))
-    .map(pointValue => groupedByPointValue[pointValue]);
+  // group questions by their category, sorting them by pointValue
+  const initCategories = game.categories.map(category => ({
+    ...category,
+    questions: category.questions.sort((a, b) => a.pointValue - b.pointValue)
+  }));
+  const categories = initCategories.map(category => ({
+    ...category,
+    questions: category.questions.map(question => ({
+      ...question,
+      category: {
+        id: category.id,
+        title: category.title,
+        gameId: category.gameId
+      },
+    }))
+  }));
 
   // Sort players by score
-  players.sort((a, b) => b.score - a.score);
+  const players = game.players.sort((a, b) => b.score - a.score);
 
   return {
     game,
     players,
     categories,
-    questions: sortedGroups
   };
 }
 

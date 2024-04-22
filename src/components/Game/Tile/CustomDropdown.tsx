@@ -1,7 +1,7 @@
 import { useGameContext } from '@/context/GameContext';
 import useHotkey from '@/hooks/useHotkey';
 import { type TPlayer } from '@/utils/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const CustomDropdown = () => {
   const {
@@ -27,15 +27,18 @@ const CustomDropdown = () => {
           {players?.map((option: TPlayer) => (
             <div
               key={option.id}
-              className="px-3 py-1.5 hover:bg-gray-300/10 cursor-pointer rounded-lg"
               onClick={() => handleSelect(option)}
+              className="px-3 py-1.5 hover:bg-gray-300/10 cursor-pointer rounded-lg transition-hover duration-300"
             >
               {option.name}
             </div>
           ))}
         </div>
       )}
-      <button className="bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg" onClick={() => setIsOpen(!isOpen)}>
+      <button
+        className="bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg transition-hover duration-300"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {selectedOption?.name}
       </button>
     </div>

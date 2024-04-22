@@ -69,7 +69,7 @@ const SelectedTile = () => {
         <MainTileContent />
         <button
           onClick={handleClose}
-          className='absolute top-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg'
+          className='absolute top-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg transition-hover duration-300'
         >
           Close
         </button>
@@ -78,7 +78,7 @@ const SelectedTile = () => {
       <AssignPoints />
       <button
         onClick={() => setShowAnswer(!showAnswer)}
-        className='absolute bottom-16 md:bottom-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg'
+        className='absolute bottom-16 md:bottom-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg transition-hover duration-300'
       >
         {showAnswer ? 'Show Question' : 'Show Answer'}
       </button>

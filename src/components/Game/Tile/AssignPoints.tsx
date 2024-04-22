@@ -18,13 +18,13 @@ const AssignPoints = () => {
         <>
           <button
             onClick={() => handleDoubleJeopardy('correct')}
-            className='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg'
+            className='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-hover duration-300'
           >
             Correct
           </button>
           <button
             onClick={() => handleDoubleJeopardy('wrong')}
-            className='bg-gray-200/30 hover:bg-gray-200/50 text-white px-4 py-2 rounded-lg'
+            className='bg-gray-200/30 hover:bg-gray-200/50 text-white px-4 py-2 rounded-lg transition-hover duration-300'
           >
             Wrong
           </button>
@@ -34,7 +34,7 @@ const AssignPoints = () => {
           <div className='flex items-center gap-2'>
             <button
               onClick={handleAssignPoints}
-              className='bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg'
+              className='bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg transition-hover duration-300'
             >
               Assign points
             </button>

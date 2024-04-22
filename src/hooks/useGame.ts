@@ -126,6 +126,9 @@ const useGame = () => {
     setDailyDoublePointsWagered(newWager)
   }
 
+  // const gridCols = `grid-cols-${game?.categories?.length || 5}`
+  const gridCols = `grid-cols-5`
+
   return {
     game,
     players: game?.players,
@@ -149,6 +152,7 @@ const useGame = () => {
     setWageredPoints,
     wagerMessage,
     handleSetDailyDoubleWager,
+    gridCols,
   }
 }
 
