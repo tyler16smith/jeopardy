@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { api } from "@/utils/api";
 
 import "@/styles/globals.css";
+import DocumentHeader from "@/components/DocumentHead";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,10 +14,7 @@ const inter = Inter({
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <main className={`font-sans ${inter.variable} bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white h-screen w-screen overflow-auto`}>
-      <header className="flex justify-between items-center p-4">
-        {/* <Image src="/logo.png" alt="Logo" width={50} height={50} /> */}
-        <h1>Play Jeopardy</h1>
-      </header>
+      <DocumentHeader />
       <Toaster position="top-right" reverseOrder={false} />
       <Component {...pageProps} />
     </main>
