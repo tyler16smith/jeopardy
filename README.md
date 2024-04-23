@@ -6,6 +6,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 1. Clone this repository locally: ```git clone https://github.com/tyler16smith/jeopardy.git```
 2. Copy the ```.env.example``` and paste it as ```.env```. From there, copy over the DATABASE_URL, NEXT_PUBLIC_SUPABASE_URL, and NEXT_PUBLIC_ANON_KEY all from Supabase. The DATABASE_URL is the connection string which you can find in the settings tab of Supabase.
+3. Run ```pnpm db:deploy``` to sync the remote postgres database with your `schema.prisma`.
 2. Go to the root folder and run ```pnpm install``` to install all dependencies.
 3. Click the "Run and Debug" button on the left navigation pane of VSCode, then select "Full Stack" and press play. OR you can go to the root and run ```pnpm dev```. I highly recommend running the debugger for local development so you can add breakpoints anywhere in the frontend or backend.
 4. By now you should be up and running in http://localhost:3000. Add a remote repository and push your code to your own repo to save the changes.
