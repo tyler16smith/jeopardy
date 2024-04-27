@@ -16,9 +16,9 @@
       }
     },
     {
+      "name": "Frontend",
       "type": "chrome",
       "request": "launch",
-      "name": "Frontend",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
     },

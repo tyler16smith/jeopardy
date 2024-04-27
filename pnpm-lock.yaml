@@ -32,6 +32,9 @@ dependencies:
   '@types/formidable':
     specifier: ^3.4.5
     version: 3.4.5
+  canvas-confetti:
+    specifier: ^1.9.2
+    version: 1.9.2
   classnames:
     specifier: ^2.5.1
     version: 2.5.1
@@ -1069,6 +1072,10 @@ packages:
 
   /caniuse-lite@1.0.30001607:
     resolution: {integrity: sha512-WcvhVRjXLKFB/kmOFVwELtMxyhq3iM/MvmXcyCe2PNf166c39mptscOc/45TTS96n2gpNV2z7+NakArTWZCQ3w==}
+    dev: false
+
+  /canvas-confetti@1.9.2:
+    resolution: {integrity: sha512-6Xi7aHHzKwxZsem4mCKoqP6YwUG3HamaHHAlz1hTNQPCqXhARFpSXnkC9TWlahHY5CG6hSL5XexNjxK8irVErg==}
     dev: false
 
   /chalk@4.1.2:

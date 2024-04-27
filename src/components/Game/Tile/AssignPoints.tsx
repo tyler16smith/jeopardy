@@ -1,5 +1,6 @@
 import { useGameContext } from '@/context/GameContext'
 import CustomDropdown from './CustomDropdown'
+import classNames from 'classnames'
 
 const AssignPoints = () => {
   const {
@@ -7,6 +8,7 @@ const AssignPoints = () => {
       players,
       selectedQuestion,
       selectedOption,
+      wageredPoints,
       handleAssignPoints,
       handleDoubleJeopardy,
     }
@@ -18,13 +20,23 @@ const AssignPoints = () => {
         <>
           <button
             onClick={() => handleDoubleJeopardy('correct')}
-            className='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-hover duration-300'
+            className={classNames(
+              'bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2',
+              'rounded-lg transition-hover duration-300', {
+              'opacity-50 cursor-not-allowed': !wageredPoints,
+            }
+            )}
           >
             Correct
           </button>
           <button
             onClick={() => handleDoubleJeopardy('wrong')}
-            className='bg-gray-200/30 hover:bg-gray-200/50 text-white px-4 py-2 rounded-lg transition-hover duration-300'
+            className={classNames(
+              'bg-gray-200/30 hover:bg-gray-200/50 text-white px-4 py-2',
+              'rounded-lg transition-hover duration-300', {
+              'opacity-50 cursor-not-allowed': !wageredPoints,
+            }
+            )}
           >
             Wrong
           </button>

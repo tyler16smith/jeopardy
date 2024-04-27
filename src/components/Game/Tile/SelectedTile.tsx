@@ -31,7 +31,9 @@ const SelectedTile = () => {
           handleClose();
           break;
         case 'p':
-          handleAssignPoints();
+          if (!selectedQuestion?.isDailyDouble) {
+            handleAssignPoints();
+          }
           break;
         case ' ':
           setShowAnswer(!showAnswer);
@@ -60,7 +62,11 @@ const SelectedTile = () => {
         </h1>
         {selectedQuestion?.isDailyDouble && (
           <h1 className='text-yellow-500 text-lg md:text-2xl font-semibold mt-2'>
-            Wagered {dailyDoublePointsWagered ?? 0}
+            Wagered {
+              dailyDoublePointsWagered && isNaN(dailyDoublePointsWagered)
+                ? 0
+                : dailyDoublePointsWagered
+            }
           </h1>
         )}
       </div>

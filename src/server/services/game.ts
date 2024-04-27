@@ -79,19 +79,16 @@ export const saveSetupDetails = async (
     }
   });
   
-  const { error: playerError } = await supabase
-    .from('Player')
-    .upsert(
-      players.map(player => ({
-        ...player,
-        gameId
-      }))
-    )
-
-  if (playerError) {
-    console.error('Error saving game details:', playerError)
-    return false
-  }
+  // delete all players and reinsert them
+  await db.player.deleteMany({
+    where: { gameId }
+  });
+  await db.player.createMany({
+    data: players.map(player => ({
+      ...player,
+      gameId
+    }))
+  });
 
   return true
 }

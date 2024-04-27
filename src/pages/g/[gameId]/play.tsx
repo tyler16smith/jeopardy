@@ -1,3 +1,4 @@
+import GameWinner from '@/components/Game/GameWinner'
 import LeaderBoard from '@/components/Game/LeaderBoard'
 import LoadingGame from '@/components/Game/LoadingGame'
 import MainBoard from '@/components/Game/MainBoard'
@@ -9,12 +10,16 @@ const Game = () => {
     gameManagement: {
       game,
       players,
+      gameWinner,
       selectedQuestion,
     }
   } = useGameContext()
 
   return (
     <div className='flex justify-center items-center w-screen h-screen relative transition-all duration-300 ease-in-out'>
+      {/* Game Winner Screen */}
+      {gameWinner?.name && <GameWinner />}
+
       {/* Tile overlay */}
       {selectedQuestion && players && (
         <SelectedTile />
