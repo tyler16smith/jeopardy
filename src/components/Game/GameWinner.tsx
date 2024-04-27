@@ -2,13 +2,12 @@ import React from 'react'
 import ConfettiComponent from './Confetti'
 import classNames from 'classnames'
 import { useGameContext } from '@/context/GameContext'
-import Image from 'next/image'
 import { Crown } from 'lucide-react'
 import { useRouter } from 'next/router'
 
 const GameWinner = () => {
   const {
-    gameManagement: { gameWinner }
+    gameManagement: { gameWinner, setShowGameWinner }
   } = useGameContext()
   const router = useRouter()
 
@@ -21,6 +20,12 @@ const GameWinner = () => {
       // isVisible ? 'opacity-100' : 'opacity-0',
     )}
     >
+      <button
+        onClick={() => setShowGameWinner(false)}
+        className='absolute top-4 right-4 bg-gray-300/20 hover:bg-gray-300/50 text-white px-4 py-2 rounded-lg transition-hover duration-300'
+      >
+        Close
+      </button>
       <ConfettiComponent />
       <div className='flex flex-col justify-center items-center gap-16 md:gap-32'>
         <p className='text-xl md:text-4xl text-gray-300 px-4 py-2 rounded-xl bg-gray-300/10 font-medium'>
@@ -34,7 +39,7 @@ const GameWinner = () => {
         </div>
       </div>
       <p
-        className='text-lg md:text-xl text-white hover:underline font-medium cursor-pointer mt-10 fixed bottom-10 translate-x-[-50%] left-1/2'
+        className='font-normal md:text-lg text-white hover:underline font-medium cursor-pointer mt-10 fixed bottom-10 translate-x-[-50%] left-1/2'
         onClick={() => router.push('/')}
       >
         Back to home

@@ -17,6 +17,7 @@ const useGame = () => {
   const [selectedQuestion, setSelectedQuestion] = useState<TQuestion | null>(null)
   const [dailyDoublePointsWagered, setDailyDoublePointsWagered] = useState<number | null>(null)
   const [wageredPoints, setWageredPoints] = useState<boolean>(false)
+  const [showGameWinner, setShowGameWinner] = useState<boolean>(false)
   const [gameWinner, setGameWinner] = useState<TPlayer | null>(null)
   const wagerMessage = `You can wager up to ${activePlayer && activePlayer?.score < 1000 ? '1000' : activePlayer?.score} points.`
   // server
@@ -53,6 +54,7 @@ const useGame = () => {
           return (prev.score > current.score) ? prev : current
         });
         setGameWinner(winner);
+        setShowGameWinner(true);
       }
     }
   }, [game]);
@@ -144,8 +146,8 @@ const useGame = () => {
     setDailyDoublePointsWagered(newWager)
   }
 
-  const gridCols = `grid-cols-${game?.categories?.length || 5}`
-  // const gridCols = `grid-cols-5`
+  // const gridCols = `grid-cols-${game?.categories?.length || 5}`
+  const gridCols = `grid-cols-5`
 
   return {
     game,
@@ -172,6 +174,8 @@ const useGame = () => {
     handleSetDailyDoubleWager,
     gridCols,
     gameWinner,
+    showGameWinner,
+    setShowGameWinner,
   }
 }
 

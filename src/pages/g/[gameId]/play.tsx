@@ -10,7 +10,7 @@ const Game = () => {
     gameManagement: {
       game,
       players,
-      gameWinner,
+      showGameWinner,
       selectedQuestion,
     }
   } = useGameContext()
@@ -18,7 +18,7 @@ const Game = () => {
   return (
     <div className='flex justify-center items-center w-screen h-screen relative transition-all duration-300 ease-in-out'>
       {/* Game Winner Screen */}
-      {gameWinner?.name && <GameWinner />}
+      {showGameWinner && <GameWinner />}
 
       {/* Tile overlay */}
       {selectedQuestion && players && (

@@ -29,6 +29,9 @@ dependencies:
   '@trpc/server':
     specifier: next
     version: 11.0.0-rc.332
+  '@types/canvas-confetti':
+    specifier: ^1.6.4
+    version: 1.6.4
   '@types/formidable':
     specifier: ^3.4.5
     version: 3.4.5
@@ -551,6 +554,10 @@ packages:
 
   /@trpc/server@11.0.0-rc.332:
     resolution: {integrity: sha512-K+cyJm2MmD4uxhfcMH0oHl/KNy8J23h/Bl9nisWOjjtYjNB6fTiO35uTuN8+CkKfXjc+873snT2QyaQXwjp1SA==}
+    dev: false
+
+  /@types/canvas-confetti@1.6.4:
+    resolution: {integrity: sha512-fNyZ/Fdw/Y92X0vv7B+BD6ysHL4xVU5dJcgzgxLdGbn8O3PezZNIJpml44lKM0nsGur+o/6+NZbZeNTt00U1uA==}
     dev: false
 
   /@types/eslint@8.56.7:
