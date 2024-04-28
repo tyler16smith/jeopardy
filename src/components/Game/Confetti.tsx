@@ -16,13 +16,11 @@ const ConfettiComponent: React.FC = () => {
       scalar: 1.5, // Adjust size of the confetti particles
       decay: 0.9, // Less decay makes the confetti slow down more slowly
     };
-
-    // Amount of confetti particles
-    const particleCount = 800; // Increase particle count for a bigger burst
+    const particleCount = 800; // // Confetti particle count; for a bigger burst
 
     const confettiDefaults = { ...defaults, particleCount };
     const launchConfetti = (origin: Origin) => {
-      confetti({ ...confettiDefaults, origin });
+      void confetti({ ...confettiDefaults, origin });
     };
 
     const scheduleConfetti = (origin: Origin, delay: number) => {
