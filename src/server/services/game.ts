@@ -1,6 +1,7 @@
 import supabase from "@/utils/supabase"
 import { type TGroupQuestions, TQuestion, type TPlayer } from "@/utils/types"
 import { db } from "../db"
+import { nobodyPlayer } from "@/utils/players"
 
 type TGroupByPointValue = Record<string, TGroupQuestions>
 
@@ -98,12 +99,14 @@ export const savePoints = async (
   gameId: string,
   questionId: string
 ) => {
-  const { error } = await supabase
-    .from('Player')
-    .upsert({
-      ...player,
-      gameId
-    })
+  if (player.id !== nobodyPlayer.id) {
+    await supabase
+      .from('Player')
+      .upsert({
+        ...player,
+        gameId
+      })
+  }
   const { error: questionError } = await supabase
     .from('Question')
     .update({
@@ -111,8 +114,8 @@ export const savePoints = async (
     })
     .eq('id', questionId)
 
-  if (error ?? questionError) {
-    console.error('Error saving points:', error)
+  if (questionError) {
+    console.error('Error saving points:', questionError)
     return false
   }
 

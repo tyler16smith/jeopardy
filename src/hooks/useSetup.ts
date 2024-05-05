@@ -34,7 +34,6 @@ const useSetup = () => {
       setPlayers(setupDetails.players)
     }
   }, [setupDetails])
-  console.log("PLAYERS: ", players)
   
   useEffect(() => {
     if (lastPlayerRef.current) {

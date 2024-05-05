@@ -30,14 +30,14 @@ const MainTileContent = () => {
             value={dailyDoublePointsWagered ?? 0}
             onChange={handleSetDailyDoubleWager}
             className={classNames(
-              'text-5xl text-center font-bold text-white',
+              'text-5xl text-center font-bold text-white w-full md:max-w-[500px]',
               'bg-gray-300/10 rounded-lg p-4 transition duration-200',
               'outline-none focus:ring-4 focus:ring-gray-300/50',
             )}
           />
           <button
             onClick={() => setWageredPoints(true)}
-            className='bg-yellow-500 text-3xl text-white px-4 py-2 rounded-lg w-full font-semibold py-5'
+            className='bg-yellow-500 text-3xl text-white px-4 py-2 rounded-lg w-full md:max-w-[500px] font-semibold py-5'
           >
             Wager points
           </button>

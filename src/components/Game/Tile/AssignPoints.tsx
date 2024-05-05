@@ -1,6 +1,6 @@
-import { useGameContext } from '@/context/GameContext'
-import CustomDropdown from './CustomDropdown'
 import classNames from 'classnames'
+import PlayerDropdown from './PlayersDropdown'
+import { useGameContext } from '@/context/GameContext'
 
 const AssignPoints = () => {
   const {
@@ -53,7 +53,7 @@ const AssignPoints = () => {
             <p>to</p>
           </div>
           {selectedOption && players && (
-            <CustomDropdown />
+            <PlayerDropdown />
           )}
         </>
       )}

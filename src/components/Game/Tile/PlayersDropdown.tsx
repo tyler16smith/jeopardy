@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { useGameContext } from '@/context/GameContext';
 import useHotkey from '@/hooks/useHotkey';
 import { type TPlayer } from '@/utils/types';
-import { useEffect, useState } from 'react';
+import { nobodyPlayer } from '@/utils/players';
 
-const CustomDropdown = () => {
+const PlayerDropdown = () => {
   const {
     gameManagement: {
       players,
@@ -33,6 +34,14 @@ const CustomDropdown = () => {
               {option.name}
             </div>
           ))}
+          <div className="border-t border-gray-300/30 my-1" />
+          <div
+            key={nobodyPlayer.id}
+            onClick={() => handleSelect(nobodyPlayer)}
+            className="px-3 py-1.5 hover:bg-gray-300/10 cursor-pointer rounded-lg transition-hover duration-300"
+          >
+            Nobody
+          </div>
         </div>
       )}
       <button
@@ -45,4 +54,4 @@ const CustomDropdown = () => {
   );
 };
 
-export default CustomDropdown;
+export default PlayerDropdown;
