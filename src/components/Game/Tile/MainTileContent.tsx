@@ -58,7 +58,10 @@ const MainTileContent = () => {
                 className='rounded-lg w-full'
               />
             )}
-            <p className='text-xl md:text-5xl text-white font-bold'>
+            <p
+              className='text-xl md:text-5xl text-white font-bold'
+              style={{ lineHeight: '70px' }}
+            >
               {showAnswer ? selectedQuestion?.answer : selectedQuestion?.text}
             </p>
           </div>
