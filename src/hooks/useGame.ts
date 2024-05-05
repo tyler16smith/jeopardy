@@ -74,7 +74,6 @@ const useGame = () => {
   };
 
   const handleDoubleJeopardy = (result: 'correct' | 'wrong') => {
-    debugger;
     if (!selectedOption || !selectedQuestion || !dailyDoublePointsWagered) return;
     const newPoints = result === 'correct'
       ? selectedOption.score + dailyDoublePointsWagered
@@ -89,7 +88,6 @@ const useGame = () => {
   }
 
   const handleAssignPoints = () => {
-    debugger;
     if (!selectedOption || !selectedQuestion) return;
     const newPoints = selectedOption.score + selectedQuestion.pointValue
     const newPlayer = { ...selectedOption, score: newPoints };
