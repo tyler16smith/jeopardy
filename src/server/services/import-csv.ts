@@ -2,8 +2,8 @@ import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
 import supabase from '@/utils/supabase';
 import { type TPlayer } from '@/utils/types';
 import cuid from 'cuid';
-const fs = require('fs');
-const csv = require('csv-parser');
+import csv from 'csv-parser';
+import fs from 'fs';
 
 type Game = {
   id?: string
@@ -93,7 +93,7 @@ export const importJeopardyCSV = async (
         newCategoryId = cuid()
         categories.push({
           id: newCategoryId,
-          title: row.category!,
+          title: row.category,
           gameId: game.id!,
         });
       }
