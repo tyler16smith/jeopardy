@@ -1,5 +1,6 @@
 // ConfettiComponent.tsx
-import React, { useEffect } from "react";
+import type React from "react";
+import { useEffect } from "react";
 import confetti from "canvas-confetti";
 
 type Origin = { x: number; y: number };

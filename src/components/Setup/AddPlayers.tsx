@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import NewPlayer from './NewPlayer'
 import Player from '../Player'
 import { useSetupContext } from '@/context/SetupContext'
-import { TPlayer } from '@/utils/types'
+import { type TPlayer } from '@/utils/types'
 
 const AddPlayers = () => {
   const {

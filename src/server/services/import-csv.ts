@@ -26,6 +26,17 @@ type Question = {
   categoryId: string
 }
 
+type Data = {
+  question: string
+  answer: string
+  imageURL_optional: string
+  pointValue: string
+  isDailyDouble: string
+  category: string
+  gameName: string
+  player: string
+}
+
 export const importJeopardyCSV = async (
   text: string
 ): Promise<string> => {
@@ -35,13 +46,13 @@ export const importJeopardyCSV = async (
   const categories: Category[] = [];
   const questions: Question[] = [];
   const players: TPlayer[] = [];
-  const results: any = [];
+  const results: Data[] = [];
   
   async function processData() {
     return new Promise((resolve, reject) => {
       fs.createReadStream('public/data/smith_family_jeopardy.csv')
         .pipe(csv())
-        .on('data', (data: any) => results.push(data))
+        .on('data', (data: Data) => results.push(data))
         .on('end', () => {
           resolve(results);
         })
@@ -54,7 +65,7 @@ export const importJeopardyCSV = async (
     if (!Array.isArray(processedData)) {
       throw new Error('No data found in CSV');
     }
-    processedData.forEach((row: any) => {
+    processedData.forEach((row: Data) => {
       if (row.question === 'question' && row.answer === 'answer' && row.imageURL_optional === 'imageURL_optional')
         return;
       // game name

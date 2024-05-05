@@ -1,5 +1,5 @@
 import supabase from "@/utils/supabase"
-import { TGroupQuestions, TQuestion, type TPlayer } from "@/utils/types"
+import { type TGroupQuestions, TQuestion, type TPlayer } from "@/utils/types"
 import { db } from "../db"
 
 type TGroupByPointValue = Record<string, TGroupQuestions>
