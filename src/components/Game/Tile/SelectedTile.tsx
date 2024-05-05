@@ -48,7 +48,7 @@ const SelectedTile = () => {
 
   return (
     <div className={classNames(
-      'absolute top-1/2 left-1/2 h-full w-full z-50',
+      'absolute top-1/2 left-1/2 h-full w-full z-50 px-2',
       'transform -translate-x-1/2 -translate-y-1/2',
       'flex justify-center items-center border-[8px]',
       'border-white/20 backdrop-blur-3xl transition-opacity duration-300',

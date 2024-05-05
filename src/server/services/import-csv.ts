@@ -2,6 +2,8 @@ import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
 import supabase from '@/utils/supabase';
 import { type TPlayer } from '@/utils/types';
 import cuid from 'cuid';
+const fs = require('fs');
+const csv = require('csv-parser');
 
 type Game = {
   id?: string
@@ -33,70 +35,77 @@ export const importJeopardyCSV = async (
   const categories: Category[] = [];
   const questions: Question[] = [];
   const players: TPlayer[] = [];
-
-  // Parse the CSV
-  const rows = text.split('\n');
-  for (const row of rows) {
-    const [
-      question,
-      answer,
-      imageURL_optional,
-      pointValue,
-      isDailyDouble,
-      category,
-      divider1,
-      player,
-      divider2,
-      gameName
-    ] = row.split(',');
-    // skip the first row (header)
-    if (question === 'question' && answer === 'answer' && imageURL_optional === 'imageURL_optional')
-      continue;
-    // game name
-    if (gameName && gameName.length > 0 && !game.id)
-      game = {
-        id: cuid(),
-        name: gameName,
-      };
-    // players
-    if (player && player.length > 0) {
-      const { iconId, colorId } = getUniqueIconAndColor(players);
-      players.push({
-        id: cuid(),
-        name: player,
-        iconId,
-        colorId,
-        score: 0,
-        gameId: game.id!,
-        originalOrder: players.length,
-      });
-    }
-    // categories
-    let newCategoryId = categories.find((c) => c.title === category)?.id;
-    if (!newCategoryId) {
-      newCategoryId = cuid()
-      categories.push({
-        id: newCategoryId,
-        title: category!,
-        gameId: game.id!,
-      });
-    }
-    // questions
-    if (
-      question && question.length > 0 &&
-      answer && answer.length > 0 &&
-      pointValue && pointValue.length > 0
-    )
-    questions.push({
-      id: cuid(),
-      text: question,
-      answer: answer,
-      imageURL: imageURL_optional ?? null,
-      pointValue: parseInt(pointValue),
-      isDailyDouble: isDailyDouble?.toLowerCase() === 'true',
-      categoryId: newCategoryId,
+  const results: any = [];
+  
+  async function processData() {
+    return new Promise((resolve, reject) => {
+      fs.createReadStream('public/data/smith_family_jeopardy.csv')
+        .pipe(csv())
+        .on('data', (data: any) => results.push(data))
+        .on('end', () => {
+          resolve(results);
+        })
+        .on('error', reject);
     });
   }
+
+  try {
+    const processedData = await processData();
+    if (!Array.isArray(processedData)) {
+      throw new Error('No data found in CSV');
+    }
+    processedData.forEach((row: any) => {
+      if (row.question === 'question' && row.answer === 'answer' && row.imageURL_optional === 'imageURL_optional')
+        return;
+      // game name
+      if (row.gameName && row.gameName.length > 0 && !game.id)
+        game = {
+          id: cuid(),
+          name: row.gameName,
+        };
+      // players
+      if (row.player && row.player.length > 0) {
+        const { iconId, colorId } = getUniqueIconAndColor(players);
+        players.push({
+          id: cuid(),
+          name: row.player,
+          iconId,
+          colorId,
+          score: 0,
+          gameId: game.id!,
+          originalOrder: players.length,
+        });
+      }
+      // categories
+      let newCategoryId = categories.find((c) => c.title === row.category)?.id;
+      if (!newCategoryId) {
+        newCategoryId = cuid()
+        categories.push({
+          id: newCategoryId,
+          title: row.category!,
+          gameId: game.id!,
+        });
+      }
+      // questions
+      if (
+        row.question && row.question.length > 0 &&
+        row.answer && row.answer.length > 0 &&
+        row.pointValue && row.pointValue.length > 0
+      )
+      questions.push({
+        id: cuid(),
+        text: row.question,
+        answer: row.answer,
+        imageURL: row.imageURL_optional ?? null,
+        pointValue: parseInt(row.pointValue),
+        isDailyDouble: row.isDailyDouble?.toLowerCase() === 'true',
+        categoryId: newCategoryId,
+      });
+    })
+  } catch (error) {
+    console.error('Error occurred:', error);
+  }
+
   // Insert the game
   const { error: gameError } = await supabase
     .from('Game')

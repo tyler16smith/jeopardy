@@ -16,7 +16,7 @@ const MainTileContent = () => {
   } = useGameContext()
 
   return (
-    <>
+    <div className='w-full md:w-[70%] text-center'>
       {/* Double Jeopardy header */}
       {selectedQuestion?.isDailyDouble && (
         <p className='absolute top-4 left-1/2 transform -translate-x-1/2 text-3xl text-yellow-500 font-bold'>
@@ -64,7 +64,7 @@ const MainTileContent = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
