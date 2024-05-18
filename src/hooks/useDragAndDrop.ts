@@ -64,7 +64,7 @@ const useDragAndDrop = () => {
         throw new Error(data?.error);
       }
       if (typeof data === 'string') {
-        router.push(`/g/${data}/setup`);
+        void router.push(`/g/${data}/setup`);
         return
       }
       throw new Error('Error uploading file');
