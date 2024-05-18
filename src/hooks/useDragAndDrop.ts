@@ -1,15 +1,13 @@
 // useDragAndDrop.ts hook
 
-import { api } from '@/utils/api';
+import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const useDragAndDrop = () => {
   const [dragging, setDragging] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [dragCounter, setDragCounter] = useState(0); // New state for drag counter
-  const uploadCSV = api.game.importCSV.useMutation()
   const router = useRouter()
 
   const handleDragEnter = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -53,34 +51,24 @@ const useDragAndDrop = () => {
   const handleFileUpload = useCallback(async (file: File) => {
     setProcessing(true);
     try {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const text = e?.target?.result;
-        if (!text || typeof text !== 'string') {
-          throw new Error('No CSV data provided.');
-        }
-        // Now you have the CSV content as a text string, you can send this to your backend
-        uploadCSV.mutate({ text: text });
-      };
-      reader.readAsText(file);
+      const formData = new FormData()
+      formData.append('file', file)
+      const response = await fetch('/api/upload_csv', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await response.json()
+      console.log(data)
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      router.push(`/g/${data}/setup`)
     } catch (error) {
       console.error('Error uploading file:', error);
       toast.error('Error uploading file');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (uploadCSV.data) {
-      void router.push(`g/${uploadCSV.data}/setup`);
-    }
-  }, [uploadCSV.data]);
-  
-  useEffect(() => {
-    if (uploadCSV.isError) {
-      toast.error('Error uploading file. Please try again.');
       setProcessing(false);
     }
-  }, [uploadCSV.isError]);
+  }, []);
 
   return {
     dragging,

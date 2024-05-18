@@ -31,7 +31,7 @@ const CSVUploadArea = ({
       <div className='w-96 flex justify-center items-center'>
         {processing ? (
           <>
-            <div className='w-6 h-6 border-2 border-t-[#6233a6]/80 rounded-full animate-spin' />
+            <div className='w-6 h-6 border-2 border-[#6233a6]/80 border-t-white rounded-full animate-spin' />
             <h3 className="text-lg text-center font-bold p-4">Processing...</h3>
           </>
         ) : (

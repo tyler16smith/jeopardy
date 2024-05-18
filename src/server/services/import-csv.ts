@@ -38,9 +38,9 @@ type Data = {
 }
 
 export const importJeopardyCSV = async (
-  text: string
+  filePath: string
 ): Promise<string> => {
-  if (!text) throw new Error('No csv data provided.');
+  if (!filePath) throw new Error('No csv data provided.');
   // initialize category stack (unique array of categories)
   let game: Game = {};
   const categories: Category[] = [];
@@ -50,7 +50,7 @@ export const importJeopardyCSV = async (
   
   async function processData() {
     return new Promise((resolve, reject) => {
-      fs.createReadStream('public/data/smith_family_jeopardy.csv')
+      fs.createReadStream(filePath)
         .pipe(csv())
         .on('data', (data: Data) => results.push(data))
         .on('end', () => {
@@ -102,16 +102,18 @@ export const importJeopardyCSV = async (
         row.question && row.question.length > 0 &&
         row.answer && row.answer.length > 0 &&
         row.pointValue && row.pointValue.length > 0
-      )
-      questions.push({
-        id: cuid(),
-        text: row.question,
-        answer: row.answer,
-        imageURL: row.imageURL_optional ?? null,
-        pointValue: parseInt(row.pointValue),
-        isDailyDouble: row.isDailyDouble?.toLowerCase() === 'true',
-        categoryId: newCategoryId,
-      });
+      ) {
+        const supabaseImageUrl = getSupabaseImageUrl(row.imageURL_optional);
+        questions.push({
+          id: cuid(),
+          text: row.question,
+          answer: row.answer,
+          imageURL: supabaseImageUrl,
+          pointValue: parseInt(row.pointValue),
+          isDailyDouble: row.isDailyDouble?.toLowerCase() === 'true',
+          categoryId: newCategoryId,
+        });
+      }
     })
   } catch (error) {
     console.error('Error occurred:', error);
@@ -143,4 +145,21 @@ export const importJeopardyCSV = async (
 
   console.log('CSV import completed successfully.');
   return game.id!;
+}
+
+const getSupabaseImageUrl = (url: string): string | null => {
+  if (!url) return null;
+  return url
+  // fetch image from url and upload to supabase
+  // const image = fs.readFileSync(
+  //   url,
+  //   'base64'
+  // );
+
+  // upload to supabase storage
+  // const { data, error } = supabase.storage
+  //   .from('jeopardy')
+  //   .upload(`public/${url}`, image);
+  // if (error) throw error;
+  // return data?.Key || '';
 }
