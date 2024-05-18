@@ -48,6 +48,8 @@ const useDragAndDrop = () => {
     }
   }, []);
 
+  type TData = string | { error?: string };
+
   const handleFileUpload = useCallback(async (file: File) => {
     setProcessing(true);
     try {
@@ -57,12 +59,15 @@ const useDragAndDrop = () => {
         method: 'POST',
         body: formData,
       })
-      const data = await response.json()
-      console.log(data)
-      if (data.error) {
-        throw new Error(data.error)
+      const data: TData = await response.json()
+      if (typeof data === 'object' && data?.error) {
+        throw new Error(data?.error);
       }
-      router.push(`/g/${data}/setup`)
+      if (typeof data === 'string') {
+        router.push(`/g/${data}/setup`);
+        return
+      }
+      throw new Error('Error uploading file');
     } catch (error) {
       console.error('Error uploading file:', error);
       toast.error('Error uploading file');

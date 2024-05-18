@@ -7,7 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
     try {
       const form = formidable({})
-      const [fields, files]: [Fields<any>, Files<'file'>] = await form.parse(req)
+      const [fields, files]: [Fields<string>, Files<'file'>] = await form.parse(req)
 
       const doc = files.file
       if (!doc?.[0]?.filepath) {
