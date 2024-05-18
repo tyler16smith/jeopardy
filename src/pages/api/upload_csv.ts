@@ -1,7 +1,6 @@
-import { importJeopardyCSV } from '@/server/services/import-csv';
-import formidable, { type Fields, type Files } from 'formidable';
-import fs from 'fs';
 import { type NextApiHandler } from 'next';
+import formidable, { type Fields, type Files } from 'formidable';
+import { importJeopardyCSV } from '@/server/services/import-csv';
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
