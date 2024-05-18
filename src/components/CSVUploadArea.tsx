@@ -22,13 +22,13 @@ const CSVUploadArea = ({
   return (
     <div
       className={classNames(
-        'flex flex-col justify-center items-center gap-5 max-w-lg',
-        'h-48 rounded-xl p-5 hover:bg-white/20 cursor-pointer',
+        'flex flex-col justify-center items-center gap-5 w-full md:max-w-sm',
+        'h-48 rounded-xl p-5 hover:bg-white/20 cursor-pointer transition duration-200',
         dragging ? 'bg-white/50' : 'bg-white/10'
       )}
       onClick={handleDivClick}
     >
-      <div className='w-96 flex justify-center items-center'>
+      <div className='w-full md:w-96 flex justify-center items-center'>
         {processing ? (
           <>
             <div className='w-6 h-6 border-2 border-[#6233a6]/80 border-t-white rounded-full animate-spin' />

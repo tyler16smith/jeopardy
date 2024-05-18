@@ -67,19 +67,19 @@ const AddPlayers = () => {
         Add Players
       </button>
       <button
-        disabled={!gameName}
+        disabled={!gameName || loadingStartGame}
         onClick={startGame}
         className={classNames(
           'flex justify-center items-center gap-2 mt-10',
           'p-2 rounded border-[1px] border-[#6233a6]/20 w-full',
           'transition duration-200 outline-none focus:ring-4 focus:ring-[#6233a6]/30', {
-          'bg-[#6233a6]/80 hover:bg-[#6233a6]/60 text-white': gameName,
-          'bg-[#6233a6]/40 text-gray-500 cursor-not-allowed': !gameName
+          'bg-[#6233a6]/80 hover:bg-[#6233a6]/60 text-white': (gameName && !loadingStartGame),
+          'bg-[#6233a6]/40 text-gray-500 cursor-not-allowed': (!gameName || loadingStartGame)
         }
         )}
       >
         {loadingStartGame ? (
-          <div className='w-5 h-5 border-2 border-t-[#6233a6]/80 rounded-full animate-spin' />
+          <div className='w-5 h-5 border-2 border-[#6233a6]/80 border-t-white rounded-full animate-spin' />
         ) : (
           <Rocket size={16} />
         )}
