@@ -59,7 +59,7 @@ const Home = () => {
           <div className="flex flex-col justify-start items-start gap-6">
             <div className="flex flex-col gap-2">
               <p className='font-bold text-2xl'>Step 3:</p>
-              <p>Upload your CSV and we'll do the rest 🚀</p>
+              <p>Upload your CSV and we&apos;ll do the rest 🚀</p>
             </div>
             <CSVUploadArea
               dragging={dragging}
