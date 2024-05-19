@@ -59,7 +59,7 @@ const useDragAndDrop = () => {
         method: 'POST',
         body: formData,
       })
-      const data: TData = await response.json()
+      const data: TData = await response.json() as TData
       if (typeof data === 'object' && data?.error) {
         throw new Error(data?.error);
       }
