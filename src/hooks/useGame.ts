@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { api } from '@/utils/api';
 import { type TPlayer, type TQuestion } from '@/utils/types';
 import toast from 'react-hot-toast';
+import { secretLastQuestionTile } from '@/utils/data';
 
 const useGame = () => {
   const { query } = useRouter()
@@ -19,6 +20,7 @@ const useGame = () => {
   const [wageredPoints, setWageredPoints] = useState<boolean>(false)
   const [showGameWinner, setShowGameWinner] = useState<boolean>(false)
   const [gameWinner, setGameWinner] = useState<TPlayer | null>(null)
+  const [activatePartyMode, setActivatePartyMode] = useState<boolean>(false)
   const wagerMessage = `You can wager up to ${activePlayer && activePlayer?.score < 1000 ? '1000' : activePlayer?.score} points.`
   // server
   const {
@@ -31,6 +33,28 @@ const useGame = () => {
   const { mutate: saveTurn } =
     api.game.savePlayerTurn.useMutation()
   const updatePoints = api.game.updatePoints.useMutation()
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 's') {
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'l') {
+            window.addEventListener('keydown', (e) => {
+              if (e.key === 'q') {
+                setSelectedQuestion(secretLastQuestionTile)
+                setActivatePartyMode(true)
+              }
+            }, { once: true });
+          }
+        }, { once: true });
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     if (game?.players && !activePlayer) {
@@ -176,6 +200,7 @@ const useGame = () => {
     gameWinner,
     showGameWinner,
     setShowGameWinner,
+    activatePartyMode,
   }
 }
 

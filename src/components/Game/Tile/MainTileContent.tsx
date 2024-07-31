@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useGameContext } from '@/context/GameContext'
 import classNames from 'classnames'
+import { isSmallScreen } from '@/utils/resize'
 
 const MainTileContent = () => {
   const {
@@ -48,19 +49,19 @@ const MainTileContent = () => {
           <p className='text-xl md:text-4xl text-gray-300 px-4 py-2 rounded-xl bg-gray-300/10 font-medium'>
             {showAnswer ? 'Answer' : 'Question'}:
           </p>
-          <div className='flex justify-center items-center gap-7'>
+          <div className='flex flex-col justify-center items-center text-center gap-5'>
             {selectedQuestion?.imageURL && !showAnswer && (
-              <Image
+              <img
                 src={selectedQuestion?.imageURL}
                 alt={selectedQuestion?.text}
                 width={600}
                 height={600}
-                className='rounded-lg w-full'
+                className='rounded-lg w-auto h-full max-h-[50vh] object-cover'
               />
             )}
             <p
               className='text-xl md:text-5xl text-white font-bold'
-              style={{ lineHeight: '70px' }}
+              style={{ lineHeight: isSmallScreen() ? '30px' : '70px' }}
             >
               {showAnswer ? selectedQuestion?.answer : selectedQuestion?.text}
             </p>

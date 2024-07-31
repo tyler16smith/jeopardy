@@ -1,8 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import classNames from 'classnames'
 import { useGameContext } from '@/context/GameContext'
 import AssignPoints from './AssignPoints'
 import MainTileContent from './MainTileContent'
+import ConfettiComponent from '../Confetti'
+import FlyingStork from './FlyingStork'
 
 const SelectedTile = () => {
   const {
@@ -15,6 +17,7 @@ const SelectedTile = () => {
       handleClose,
       handleAssignPoints,
       dailyDoublePointsWagered,
+      activatePartyMode,
     }
   } = useGameContext()
 
@@ -46,14 +49,24 @@ const SelectedTile = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showAnswer, selectedQuestion]);
 
+  const bgColor = useMemo(() => {
+    if ((activatePartyMode && showAnswer) || selectedQuestion?.isDailyDouble)
+      return 'bg-yellow-500/50';
+    return 'bg-gray-600/20';
+  }, [
+    selectedQuestion?.isDailyDouble,
+    activatePartyMode,
+    showAnswer
+  ]);
+
   return (
     <div className={classNames(
       'absolute top-1/2 left-1/2 h-full w-full z-50 px-2',
       'transform -translate-x-1/2 -translate-y-1/2',
       'flex justify-center items-center border-[8px]',
-      'border-white/20 backdrop-blur-3xl transition-opacity duration-300',
-      selectedQuestion?.isDailyDouble ? 'bg-yellow-500/50' : 'bg-gray-600/20',
+      'border-white/20 backdrop-blur-custom transition-opacity duration-300',
       isVisible ? 'opacity-100' : 'opacity-0',
+      bgColor,
     )}>
       {/* Title and points */}
       <div className='absolute top-4 left-4'>
@@ -88,6 +101,13 @@ const SelectedTile = () => {
       >
         {showAnswer ? 'Show Question' : 'Show Answer'}
       </button>
+
+      {activatePartyMode && showAnswer && (
+        <>
+          <FlyingStork />
+          <ConfettiComponent />
+        </>
+      )}
     </div>
   )
 }

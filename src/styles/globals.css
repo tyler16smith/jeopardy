@@ -21,3 +21,10 @@
   scrollbar-width: normal;
   scrollbar-color: #2e305c transparent;
 }
+
+.backdrop-blur-custom {
+  backdrop-filter: blur(50px);
+  /* For most modern browsers */
+  -webkit-backdrop-filter: blur(50px);
+  /* For Safari and iOS */
+}
