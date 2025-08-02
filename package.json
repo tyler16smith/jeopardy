@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "db:migrate": "prisma migrate dev --create-only",
+    "db:migrate": "prisma migrate dev --create-only && prisma migrate deploy",
+    "db:migrate:create": "prisma migrate dev --create-only",
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "dev": "next dev",
