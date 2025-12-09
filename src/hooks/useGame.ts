@@ -8,7 +8,8 @@ import toast from 'react-hot-toast';
 import { secretLastQuestionTile } from '@/utils/data';
 
 const useGame = () => {
-  const { query } = useRouter()
+  const router = useRouter()
+  const { query } = router
   const gameId = query.gameId as string
   // local
   const [showAnswer, setShowAnswer] = useState(false);
@@ -173,6 +174,10 @@ const useGame = () => {
   // const gridCols = `grid-cols-${game?.categories?.length || 5}`
   const gridCols = `grid-cols-5`
 
+  const handleRedirectToSetup = () => {
+    void router.push(`/g/${gameId}/setup?editFromPlay=true`)
+  }
+
   return {
     game,
     players: game?.players,
@@ -201,6 +206,7 @@ const useGame = () => {
     showGameWinner,
     setShowGameWinner,
     activatePartyMode,
+    handleRedirectToSetup,
   }
 }
 

@@ -4,6 +4,7 @@ import LoadingGame from '@/components/Game/LoadingGame'
 import MainBoard from '@/components/Game/MainBoard'
 import SelectedTile from '@/components/Game/Tile/SelectedTile'
 import { GameProvider, useGameContext } from '@/context/GameContext'
+import { Pencil } from 'lucide-react'
 
 const Game = () => {
   const {
@@ -12,6 +13,7 @@ const Game = () => {
       players,
       showGameWinner,
       selectedQuestion,
+      handleRedirectToSetup,
     }
   } = useGameContext()
 
@@ -29,8 +31,9 @@ const Game = () => {
         {!game ? <LoadingGame />
           : (
             <div>
-              <p className='text-5xl tracking-wide font-bold text-center text-gray-300/20 mb-10 -mt-10'>
+              <p className='flex justify-center items-center gap-3 text-5xl tracking-wide font-bold text-center text-gray-300/20 mb-10 -mt-10'>
                 {game.game.name}
+                <Pencil size={24} className='text-gray-300/20 hover:text-gray-300/50 cursor-pointer' onClick={handleRedirectToSetup} />
               </p>
               <div className='md:flex justify-center items-start gap-10 w-full'>
                 <MainBoard />

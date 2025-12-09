@@ -9,9 +9,9 @@ export default {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       colors: {
-        jeopardy: 'hsl(280,100%,70%)',
-        'jeopardy-light': 'hsl(280,100%,80%)',
-        'jeopardy-dark': 'hsl(280,100%,60%)',
+        jeopardy: 'hsl(217, 88.50%, 62.40%)',
+        'jeopardy-light': 'hsl(217, 81.30%, 70.60%)',
+        'jeopardy-dark': 'hsl(217, 57.10%, 41.20%)',
       }
     },
   },

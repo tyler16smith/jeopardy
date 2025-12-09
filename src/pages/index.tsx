@@ -39,7 +39,7 @@ const Home = () => {
       </div>
       <div className="container flex flex-col items-center justify-center gap-16 px-4 py-16">
         <h1 className="font-extrabold tracking-tight text-5xl sm:text-[4rem]">
-          Play <span className="text-jeopardy/70">Jeopardy!</span>
+          Play <span className="text-jeopardy-light">Jeopardy!</span>
         </h1>
         <div className='flex flex-col lg:flex-row justify-center items-start gap-16 mt-5 lg:text-lg'>
           <div className="flex flex-col gap-2">
