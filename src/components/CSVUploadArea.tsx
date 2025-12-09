@@ -23,7 +23,7 @@ const CSVUploadArea = ({
     <div
       className={classNames(
         'flex flex-col justify-center items-center gap-5 w-full md:max-w-sm',
-        'h-48 rounded-xl p-5 hover:bg-white/20 cursor-pointer transition duration-200',
+        'h-12 rounded-xl p-5 hover:bg-white/20 cursor-pointer transition duration-200',
         dragging ? 'bg-white/50' : 'bg-white/10'
       )}
       onClick={handleDivClick}
