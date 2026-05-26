@@ -59,10 +59,14 @@ const useGame = () => {
 
   useEffect(() => {
     if (game?.players && !activePlayer) {
+      const onTurnPlayers = game.players.filter(player => player.onTurn);
       const nextPlayer =
-        game?.players.find(player => player.onTurn) ??
-        game?.players[0];
+        onTurnPlayers.length === 1
+          ? onTurnPlayers[0]
+          : game.players.find(player => player.originalOrder === 0) ?? game.players[0];
+      if (!nextPlayer) return;
       setActivePlayer(nextPlayer);
+      saveTurn({ gameId, playerId: nextPlayer.id });
     }
 
     if (game?.categories) {
@@ -141,9 +145,7 @@ const useGame = () => {
     const nextPlayer = game?.players.find(player => player.originalOrder === nextOrder);
     if (!nextPlayer) return;
     setActivePlayer(nextPlayer);
-    void saveTurn({
-      playerId: nextPlayer.id
-    })
+    saveTurn({ gameId, playerId: nextPlayer.id });
   }
 
   const handleSelectQuestion = (question: TQuestion) => {

@@ -76,8 +76,8 @@ const AddPlayers = () => {
           'flex justify-center items-center gap-2 mt-10',
           'p-2 rounded border-[1px] border-jeopardy/20 w-full',
           'transition duration-200 outline-none focus:ring-4 focus:ring-jeopardy/30', {
-          'bg-jeopardy/80 hover:bg-jeopardy/60 text-white': (gameName && !loadingStartGame),
-          'bg-jeopardy/40 text-gray-500 cursor-not-allowed': (!gameName || loadingStartGame)
+          'bg-white text-jeopardy-dark hover:bg-white/90': (gameName && !loadingStartGame),
+          'cursor-not-allowed bg-white/20 text-white/50': (!gameName || loadingStartGame)
         }
         )}
       >

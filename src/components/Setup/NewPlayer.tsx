@@ -35,7 +35,7 @@ const NewPlayer = () => {
         placeholder='Player Name'
         onBlur={handleOnBlur}
       />
-      <p className='text-xs text-gray-400 italic text-end'>Enter to add player</p>
+      <p className='text-end text-xs italic text-white/50'>Enter to add player</p>
     </div>
   )
 }

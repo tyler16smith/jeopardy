@@ -1,4 +1,3 @@
-import supabase from "@/utils/supabase"
 import { type TGroupQuestions, TQuestion, type TPlayer } from "@/utils/types"
 import { db } from "../db"
 import { nobodyPlayer } from "@/utils/players"
@@ -87,7 +86,8 @@ export const saveSetupDetails = async (
   await db.player.createMany({
     data: players.map(player => ({
       ...player,
-      gameId
+      gameId,
+      onTurn: player.originalOrder === 0,
     }))
   });
 
@@ -99,32 +99,34 @@ export const savePoints = async (
   gameId: string,
   questionId: string
 ) => {
-  if (player.id !== nobodyPlayer.id) {
-    await supabase
-      .from('Player')
-      .upsert({
-        ...player,
-        gameId
-      })
+  try {
+    if (player.id !== nobodyPlayer.id) {
+      await db.player.upsert({
+        where: { id: player.id },
+        update: { ...player, gameId },
+        create: { ...player, gameId },
+      });
+    }
+    await db.question.update({
+      where: { id: questionId },
+      data: { answeredBy: player.id },
+    });
+    return true;
+  } catch (error) {
+    console.error('Error saving points:', error);
+    return false;
   }
-  const { error: questionError } = await supabase
-    .from('Question')
-    .update({
-      answeredBy: player.id
-    })
-    .eq('id', questionId)
-
-  if (questionError) {
-    console.error('Error saving points:', questionError)
-    return false
-  }
-
-  return true
 }
 
-export const savePlayerTurn = async (playerId: string) => {
-  await db.player.update({
-    where: { id: playerId },
-    data: { onTurn: true }
-  });
+export const savePlayerTurn = async (gameId: string, playerId: string) => {
+  await db.$transaction([
+    db.player.updateMany({
+      where: { gameId },
+      data: { onTurn: false },
+    }),
+    db.player.update({
+      where: { id: playerId },
+      data: { onTurn: true },
+    }),
+  ]);
 }

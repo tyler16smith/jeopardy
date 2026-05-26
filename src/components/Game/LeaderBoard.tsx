@@ -10,7 +10,7 @@ const LeaderBoard = () => {
 
   return (
     <div className='h-full'>
-      <p className='text-2xl font-bold text-gray-300/40'>Leaderboard</p>
+      <p className='text-2xl font-bold text-white/90'>Leaderboard</p>
       <div className='flex flex-col gap-2 mt-4 w-full'>
         {game?.players?.map(player => (
           <motion.div
@@ -42,7 +42,7 @@ const LeaderBoard = () => {
                 </div>
                 <span>{player.name}</span>
               </div>
-              <div className='text-2xl font-bold text-gray-300'>
+              <div className='text-2xl font-bold text-white'>
                 {player.score || 0}
               </div>
             </div>

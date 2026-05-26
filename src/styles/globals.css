@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-blue-900;
+  }
+}
+
 /* Custom scrollbar */
 .scrollbar::-webkit-scrollbar {
   width: 10px;
@@ -27,4 +33,18 @@
   /* For most modern browsers */
   -webkit-backdrop-filter: blur(50px);
   /* For Safari and iOS */
+}
+
+@layer components {
+  .jeopardy-card {
+    @apply rounded-xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm;
+  }
+
+  .jeopardy-btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-white px-5 py-2.5 font-semibold text-jeopardy-dark transition hover:bg-white/90;
+  }
+
+  .jeopardy-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-white/30 bg-white/15 px-5 py-2.5 font-medium text-white transition hover:bg-white/25;
+  }
 }

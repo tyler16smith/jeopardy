@@ -1,6 +1,6 @@
 import { getUniqueIconAndColor } from '@/utils/colors-and-icons';
-import supabase from '@/utils/supabase';
 import { type TPlayer } from '@/utils/types';
+import { db } from '../db';
 import cuid from 'cuid';
 import csv from 'csv-parser';
 import fs from 'fs';
@@ -103,12 +103,12 @@ export const importJeopardyCSV = async (
         row.answer && row.answer.length > 0 &&
         row.pointValue && row.pointValue.length > 0
       ) {
-        const supabaseImageUrl = getSupabaseImageUrl(row.imageURL_optional);
+        const imageURL = getImageUrl(row.imageURL_optional);
         questions.push({
           id: cuid(),
           text: row.question,
           answer: row.answer,
-          imageURL: supabaseImageUrl,
+          imageURL,
           pointValue: parseInt(row.pointValue),
           isDailyDouble: row.isDailyDouble?.toLowerCase() === 'true',
           categoryId: newCategoryId,
@@ -119,47 +119,23 @@ export const importJeopardyCSV = async (
     console.error('Error occurred:', error);
   }
 
-  // Insert the game
-  const { error: gameError } = await supabase
-    .from('Game')
-    .insert(game);
-  if (gameError) throw gameError;
-
-  // Insert the categories
-  const { error: categoriesError } = await supabase
-    .from('Category')
-    .insert(categories);
-  if (categoriesError) throw categoriesError;
-
-  // Insert the questions
-  const { error: questionsError } = await supabase
-    .from('Question')
-    .insert(questions);
-  if (questionsError) throw questionsError;
-  
-  // Insert the players
-  const { error: playersError } = await supabase
-    .from('Player')
-    .insert(players);
-  if (playersError) throw playersError;
+  await db.$transaction([
+    db.game.create({ data: { id: game.id!, name: game.name! } }),
+    db.category.createMany({ data: categories }),
+    db.question.createMany({ data: questions }),
+    db.player.createMany({
+      data: players.map(player => ({
+        ...player,
+        onTurn: player.originalOrder === 0,
+      })),
+    }),
+  ]);
 
   console.log('CSV import completed successfully.');
   return game.id!;
 }
 
-const getSupabaseImageUrl = (url: string): string | null => {
+const getImageUrl = (url: string): string | null => {
   if (!url) return null;
-  return url
-  // fetch image from url and upload to supabase
-  // const image = fs.readFileSync(
-  //   url,
-  //   'base64'
-  // );
-
-  // upload to supabase storage
-  // const { data, error } = supabase.storage
-  //   .from('jeopardy')
-  //   .upload(`public/${url}`, image);
-  // if (error) throw error;
-  // return data?.Key || '';
+  return url;
 }

@@ -5,7 +5,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 ## How to get started
 
 1. Clone this repository locally: ```git clone https://github.com/tyler16smith/jeopardy.git```
-2. Copy the ```.env.example``` and paste it as ```.env```. From there, copy over the DATABASE_URL, NEXT_PUBLIC_SUPABASE_URL, and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY all from Supabase. The DATABASE_URL is the connection string which you can find in the settings tab of Supabase.
+2. Copy the ```.env.example``` and paste it as ```.env```. From there, copy over the DATABASE_URL and DIRECT_URL from your [Neon](https://neon.tech) project dashboard.
 3. Run ```pnpm db:deploy``` to sync the remote postgres database with your `schema.prisma`.
 2. Go to the root folder and run ```pnpm install``` to install all dependencies.
 3. Click the "Run and Debug" button on the left navigation pane of VSCode, then select "Full Stack" and press play. OR you can go to the root and run ```pnpm dev```. I highly recommend running the debugger for local development so you can add breakpoints anywhere in the frontend or backend.
@@ -21,7 +21,7 @@ If you are not familiar with the different technologies used in this project, pl
 - [PNPM](https://pnpm.io/) - Wicked fast package manager
 - [Tailwind CSS](https://tailwindcss.com) - CSS library
 - [Prisma](https://prisma.io) - ORM
-- [Supabase](https://supabase.com) - Postgres Database Management
+- [Neon](https://neon.tech) - Postgres Database
 
 Auth Recommendation (not implemented yet):
 - [Clerk](https://clerk.com/)

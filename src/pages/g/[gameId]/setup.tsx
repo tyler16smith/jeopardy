@@ -14,8 +14,8 @@ const NewGame = () => {
   } = useSetupContext()
 
   return (
-    <div className='flex justify-center items-center w-full h-full'>
-      <div className='flex flex-col gap-3 w-full max-w-96'>
+    <div className='flex min-h-screen items-center justify-center px-4 py-12'>
+      <div className='jeopardy-card flex w-full max-w-md flex-col gap-3'>
         <p className='text-2xl font-bold text-center mb-5'>
           {gameName && gameName.length > 0 ? gameName : 'New Game'}
         </p>

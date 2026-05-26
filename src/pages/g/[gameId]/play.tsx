@@ -31,9 +31,9 @@ const Game = () => {
         {!game ? <LoadingGame />
           : (
             <div>
-              <p className='flex justify-center items-center gap-3 text-5xl tracking-wide font-bold text-center text-gray-300/20 mb-10 -mt-10'>
+              <p className='-mt-10 mb-10 flex items-center justify-center gap-3 text-center text-4xl font-bold tracking-wide text-white sm:text-5xl'>
                 {game.game.name}
-                <Pencil size={24} className='text-gray-300/20 hover:text-gray-300/50 cursor-pointer' onClick={handleRedirectToSetup} />
+                <Pencil size={24} className='cursor-pointer text-white/60 transition hover:text-white' onClick={handleRedirectToSetup} />
               </p>
               <div className='md:flex justify-center items-start gap-10 w-full'>
                 <MainBoard />

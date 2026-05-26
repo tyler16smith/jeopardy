@@ -18,7 +18,7 @@ const LoadingGame = () => {
 
   const LoadingLeaderboard = () => (
     <div className="w-full mt-6">
-      <p className='text-2xl font-bold text-gray-300/40 mb-4'>Leaderboard</p>
+      <p className='mb-4 text-2xl font-bold text-white/90'>Leaderboard</p>
       {Array.from({ length: 5 }, (_, i) => (
         <div key={i} className="h-12 mt-2 bg-gray-300/10 animate-pulse rounded-lg" />
       ))}

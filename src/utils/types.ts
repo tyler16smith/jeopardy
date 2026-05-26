@@ -6,6 +6,7 @@ export type TPlayer = {
   score: number
   originalOrder: number
   gameId: string
+  onTurn?: boolean
 }
 
 export type TQuestion = {

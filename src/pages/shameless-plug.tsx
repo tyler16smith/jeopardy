@@ -2,13 +2,13 @@ import { HardHat } from "lucide-react"
 
 const ShamelessPlug = () => {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center gap-4 px-4 py-16">
-      <HardHat size={64} color="#4246a1" />
+    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4 px-4 py-16">
+      <HardHat size={64} className="text-yellow-300" />
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-        Build <span className="text-[hsl(280,100%,70%)]">Anything</span>
+        Build <span className="text-yellow-300">Anything</span>
       </h1>
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-        Go <span className="text-[hsl(280,100%,70%)]">Anywhere</span>
+        Go <span className="text-yellow-300">Anywhere</span>
       </h1>
     </div>
   )

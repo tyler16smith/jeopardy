@@ -16,7 +16,7 @@ const MainBoard = () => {
       <div className={`grid ${gridCols} gap-1.5 md:gap-3`}>
         {game?.categories.map(category => (
           <div key={category.id} className="flex justify-center items-center w-full h-16 md:h-20 bg-gray-300/10 rounded-lg">
-            <div className="text-sm md:text-xl font-bold text-gray-300 text-center">
+            <div className="text-center text-sm font-bold text-white md:text-xl">
               {category.title}
             </div>
           </div>
@@ -35,7 +35,7 @@ const MainBoard = () => {
                 className={classNames(
                   "flex justify-center items-center w-full h-20 md:h-32 rounded-lg transition-hover duration-300", {
                   "bg-gray-300/30 hover:bg-gray-300/50 text-white cursor-pointer": !question.answeredBy,
-                  "bg-gray-300/5 opacity-50 text-gray-500 cursor-not-allowed": question.answeredBy,
+                  "bg-gray-300/5 text-white/40 opacity-50 cursor-not-allowed": question.answeredBy,
                 }
                 )}
               >

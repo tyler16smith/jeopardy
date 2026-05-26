@@ -20,7 +20,7 @@ const Player = ({ player, handleDelete }: PlayerProps) => {
       {handleDelete && (
         <button
           onClick={() => handleDelete(player.id)}
-          className='text-gray-500 hover:text-gray-700'
+          className='text-white/50 transition hover:text-white'
         >
           <Trash size={22} />
         </button>

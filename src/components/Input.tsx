@@ -35,7 +35,7 @@ const Input = ({
       className={classNames(
         'border border-gray-300 rounded p-2 backdrop-blur-lg',
         'border-[1px] border-gray-400/20 bg-gray-400/10',
-        'text-white outline-none focus:border-gray-400/30',
+        'text-white placeholder:text-white/50 outline-none focus:border-white/40',
         'ring-4 ring-transparent focus:ring-gray-400/30',
         'transition duration-200 w-full',
       )}

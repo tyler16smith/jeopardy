@@ -77,9 +77,10 @@ export const gameRouter = createTRPCRouter({
 
   savePlayerTurn: publicProcedure
     .input(z.object({
+      gameId: z.string(),
       playerId: z.string(),
     }))
     .mutation(async ({ input }) => {
-      return await savePlayerTurn(input.playerId);
+      return await savePlayerTurn(input.gameId, input.playerId);
     })
 });
